@@ -1,0 +1,26 @@
+#Local specifics.
+DIR_HOME=~/devel/other/
+MINGW32_INCLUDE=
+MINGW32_LIB=
+DIR_SDL2=
+DIR_OBJ=objects
+SYSTEM_FLAGS=
+
+#Dependencies
+DIR_LIBDANSDL_2=$(DIR_HOME)libdansdl2
+
+#Commands.
+CLEAN=if [ -d $(DIR_OBJ) ]; then rm -rf $(DIR_OBJ); fi; if [ -f libdansdl2-tools.a ]; then rm libdansdl2-tools.a; fi;
+CREATE_OBJ_DIR=mkdir -p $(DIR_OBJ)
+
+#Build specifics.
+OPTIMIZATION=-O2
+#DEBUG=-g
+
+#Fixed compiler definitions.
+CC=g++
+WARNING_FLAGS=-Wall -Wextra -Wundef -Wcast-align -Wwrite-strings -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -Woverloaded-virtual
+FLAGS_BASE=-Wno-deprecated -ansi -pedantic -std=c++11 -fno-rtti $(SYSTEM_FLAGS)
+INCLUDES=-I $(DIR_LIBDANSDL_2)
+
+include makefile_common

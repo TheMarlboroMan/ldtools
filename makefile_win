@@ -1,0 +1,26 @@
+#Local specifics.
+DIR_HOME=c:/devel/repos/
+MINGW32_INCLUDE=$(DIR_HOME)../deps/mingw-w64-8-1/mingw32/include/
+MINGW32_LIB=$(DIR_HOME)../deps/mingw-w64-8-1/mingw32/lib/
+DIR_SDL2=$(DIR_HOME)../deps/sdl2-plus-libs/include/
+DIR_OBJ=objects
+SYSTEM_FLAGS=-DWINCOMPIL=1 -D__NO_INLINE__
+
+#Dependencies
+DIR_LIBDANSDL_2=$(DIR_HOME)libdansdl2
+
+#Commands.
+CLEAN=if exist $(DIR_OBJ) rmdir $(DIR_OBJ) /S /Q && if exist libdansdl2-tools.a rm libdansdl2-tools.a
+CREATE_OBJ_DIR=	if not exist "$(DIR_OBJ)" mkdir $(DIR_OBJ)
+
+#Build specifics.
+OPTIMIZATION=-O2
+#DEBUG=-g
+
+#Fixed compiler definitions.
+CC=g++
+WARNING_FLAGS=-Wno-deprecated -Wall
+FLAGS_BASE= -fno-rtti -ansi -pedantic -std=c++11 $(SYSTEM_FLAGS)
+INCLUDES=-I $(MINGW32_INCLUDE) -I $(MINGW32_LIB) -I $(DIR_LIBDANSDL_2)
+
+include makefile_common
