@@ -8,6 +8,8 @@ SYSTEM_FLAGS=-DWINCOMPIL=1 -D__NO_INLINE__
 
 #Dependencies
 DIR_LIBDANSDL_2=$(DIR_HOME)libdansdl2
+DIR_TOOLS=$(DIR_HOME)tools
+DIR_LOG=$(DIR_HOME)log
 
 #Commands.
 CLEAN=if exist $(DIR_OBJ) rmdir $(DIR_OBJ) /S /Q && if exist libdansdl2-tools.a rm libdansdl2-tools.a
@@ -21,6 +23,6 @@ OPTIMIZATION=-O2
 CC=g++
 WARNING_FLAGS=-Wno-deprecated -Wall
 FLAGS_BASE= -fno-rtti -ansi -pedantic -std=c++11 $(SYSTEM_FLAGS)
-INCLUDES=-I $(MINGW32_INCLUDE) -I $(MINGW32_LIB) -I $(DIR_LIBDANSDL_2)
+INCLUDES=-I $(MINGW32_INCLUDE) -I $(MINGW32_LIB) -I $(DIR_LIBDANSDL_2) -I $(DIR_TOOLS) -I $(DIR_LOG)
 
-include makefile_common
+include _makefile_common

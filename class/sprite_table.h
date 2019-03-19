@@ -5,9 +5,11 @@
 #include <map>
 #include <vector>
 
+//LibDanSDL2 deps.
 #include <video/rect/rect.h>
 
-#include "text_reader.h"
+//Tools deps.
+#include <class/text_reader.h>
 
 namespace tools
 {

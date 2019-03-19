@@ -1,6 +1,8 @@
 #include "sprite_table.h"
-#include "../source/string_utils.h"
-#include "../templates/compatibility_patches.h"
+
+//Tools deps.
+#include <source/string_utils.h>
+#include <templates/compatibility_patches.h>
 
 using namespace tools;
 

@@ -28,7 +28,6 @@ $(DIR_CLASS)fps_counter.cpp
 
 $(DIR_O)sprite_table.o :\
 create_obj\
-$(DIR_O)string_utils.o \
 $(DIR_CLASS)sprite_table.h \
 $(DIR_CLASS)sprite_table.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_CLASS)sprite_table.cpp -o $(DIR_O)sprite_table.o
@@ -48,7 +47,6 @@ $(DIR_CLASS)ttf_manager.cpp
 
 $(DIR_O)view_composer.o :\
 create_obj\
-$(DIR_O)dnot_parser.o \
 $(DIR_CLASS)view_composer.h \
 $(DIR_CLASS)view_composer.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_CLASS)view_composer.cpp -o $(DIR_O)view_composer.o

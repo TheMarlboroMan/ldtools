@@ -8,6 +8,8 @@ SYSTEM_FLAGS=
 
 #Dependencies
 DIR_LIBDANSDL_2=$(DIR_HOME)libdansdl2
+DIR_TOOLS=$(DIR_HOME)tools
+DIR_LOG=$(DIR_HOME)log
 
 #Commands.
 CLEAN=if [ -d $(DIR_OBJ) ]; then rm -rf $(DIR_OBJ); fi; if [ -f libdansdl2-tools.a ]; then rm libdansdl2-tools.a; fi;
@@ -21,6 +23,6 @@ OPTIMIZATION=-O2
 CC=g++
 WARNING_FLAGS=-Wall -Wextra -Wundef -Wcast-align -Wwrite-strings -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -Woverloaded-virtual
 FLAGS_BASE=-Wno-deprecated -ansi -pedantic -std=c++11 -fno-rtti $(SYSTEM_FLAGS)
-INCLUDES=-I $(DIR_LIBDANSDL_2)
+INCLUDES=-I $(DIR_LIBDANSDL_2) -I $(DIR_TOOLS) -I $(DIR_LOG)
 
-include makefile_common
+include _makefile_common

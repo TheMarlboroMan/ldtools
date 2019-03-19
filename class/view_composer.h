@@ -3,12 +3,11 @@
 
 #include <memory>
 
-#include "dnot_parser.h"
-
+//LibdanSDL deps.
 #include <def_video.h>
 
-
-//TODO: Perhaps this should be a different project...
+//Tools deps.
+#include <class/dnot_parser.h>
 
 namespace tools
 {
@@ -16,13 +15,13 @@ namespace tools
 //!The view composer creates graphical presentations through configuration files with little coding and compiling.
 /**
 It works in two stages: a dnot configuration file which defines the elements
-to be drawn and a code snippet to connect textures and fonts to it. Once the 
-file is done and the resources are connected to the composer, a call to 
+to be drawn and a code snippet to connect textures and fonts to it. Once the
+file is done and the resources are connected to the composer, a call to
 "parse" with the filename and the view node (dnots can have many root nodes)
 will mount the view and the call to "draw" will draw it.
 
 Elements drawn can be internal or external. Internal elements have an id that
-can be used in code to manipulate them. External elements exist in code and 
+can be used in code to manipulate them. External elements exist in code and
 are made to correspond with a key in the file.
 
 The structure of the file goes like this:
@@ -43,8 +42,8 @@ handle through the methods map_texture(handle, texture), map_surface(handle, sur
 or map_font(handle, font). The handle will be used within the file to represent
 the resource. These links or "maps" need to be done before "parse" is called!.
 
-In the file, "type" corresponds either to a definition or a representation. 
-Definitions can be integer or float values that can be used outside the 
+In the file, "type" corresponds either to a definition or a representation.
+Definitions can be integer or float values that can be used outside the
 composer (that is, in the code, through the get_int or get_float values) to
 avoid recompilation. So far, considering how the file is parsed as a regular
 dnot, there is no support for internal definitions.
@@ -76,7 +75,7 @@ ttf:
 external:
 	ref:"menu"	(allows a code representation to be included in the view
 			and use the "order" attribute. register_as_external
-			is used for this purpose). These must be registered 
+			is used for this purpose). These must be registered
 			before loading the file.
 
 bitmap:
@@ -130,7 +129,7 @@ class view_composer
 	private:
 
 	//!Internal template helper to get definitions.
-	template<typename T> 
+	template<typename T>
 	T get_definition(const std::string k, const std::map<std::string, T>& map) const
 	{
 		try

@@ -1,6 +1,8 @@
 #include "animation_table.h"
-#include "../source/string_utils.h"
-#include "../templates/compatibility_patches.h"
+
+//Tools deps.
+#include <source/string_utils.h>
+#include <templates/compatibility_patches.h>
 
 using namespace tools;
 
@@ -79,16 +81,16 @@ void animation_table::load(const std::string& ruta) {
 
 				const char inicio=linea[0];
 				switch(inicio) {
-					case inicio_titulo: 
+					case inicio_titulo:
 						if(animacion) insertar_anim(animacion, id);
 						animacion=animation(); //Reset animación...
 						animacion.name=linea.substr(1);
 					break;
-					case inicio_cabecera: 
-						id=read_header(linea.substr(1)); 
+					case inicio_cabecera:
+						id=read_header(linea.substr(1));
 					break;
-					default: 
-						read_line(linea, animacion); 
+					default:
+						read_line(linea, animacion);
 					break;
 				}
 			}
