@@ -12,7 +12,7 @@ DIR_TOOLS=$(DIR_HOME)tools
 DIR_LOG=$(DIR_HOME)log
 
 #Commands.
-CLEAN=if exist $(DIR_OBJ) rmdir $(DIR_OBJ) /S /Q && if exist libdansdl2-tools.a rm libdansdl2-tools.a
+CLEAN=if exist "$(DIR_OBJ)" rmdir $(DIR_OBJ) /S /Q && if exist libdansdl2-tools.a del libdansdl2-tools.a
 CREATE_OBJ_DIR=	if not exist "$(DIR_OBJ)" mkdir $(DIR_OBJ)
 
 #Build specifics.
