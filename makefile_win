@@ -1,9 +1,9 @@
-#Local specifics.
+#Machine specifics.
 DIR_HOME=c:/devel/repos/
-MINGW32_INCLUDE=$(DIR_HOME)../deps/mingw-w64-8-1/mingw32/include/
-MINGW32_LIB=$(DIR_HOME)../deps/mingw-w64-8-1/mingw32/lib/
-DIR_SDL2=$(DIR_HOME)../deps/sdl2-plus-libs/include/
 DIR_OBJ=objects
+
+MINGWPATH=c:/devel/deps/mingw-w64/mingw32/
+DIR_SDL2=c:/devel/deps/sdl2-plus-libs/include/
 SYSTEM_FLAGS=-DWINCOMPIL=1 -D__NO_INLINE__
 
 #Dependencies
@@ -23,6 +23,6 @@ OPTIMIZATION=-O2
 CC=g++
 WARNING_FLAGS=-Wno-deprecated -Wall
 FLAGS_BASE= -fno-rtti -ansi -pedantic -std=c++11 $(SYSTEM_FLAGS)
-INCLUDES=-I $(MINGW32_INCLUDE) -I $(MINGW32_LIB) -I $(DIR_LIBDANSDL_2) -I $(DIR_TOOLS) -I $(DIR_LOG)
+INCLUDES=-I $(MINGW32_INCLUDE) -I $(MINGW32_LIB) -I $(DIR_LIBDANSDL_2) -I $(DIR_TOOLS) -I $(DIR_LOG) -I $(DIR_SDL2)
 
-include _makefile_common
+include make/makefile_common
