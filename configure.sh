@@ -42,8 +42,6 @@ sed -i -e "s^__TEMPLATE_DIR_HOME__^DIR_HOME=$home_dir^g" ./$makefile_name;
 sed -i -e "s/__TEMPLATE_OPTIMIZATION__/$optimizations/g" ./$makefile_name;
 sed -i -e "s/__TEMPLATE_DEBUG__/$debug/g" ./$makefile_name;
 
-echo "Done";
-
 while true; do
 	echo -n "Begin compilation (y/n)?: ";
 	read begin_compilation
@@ -52,3 +50,6 @@ while true; do
 		"n") break;;
 	esac
 done
+
+echo "Done";
+
