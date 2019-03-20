@@ -1,5 +1,5 @@
 #Local specifics.
-DIR_HOME=~/devel/other/
+__TEMPLATE_DIR_HOME__
 MINGW32_INCLUDE=
 MINGW32_LIB=
 DIR_SDL2=
@@ -16,8 +16,8 @@ CLEAN=if [ -d $(DIR_OBJ) ]; then rm -rf $(DIR_OBJ); fi; if [ -f libdansdl2-tools
 CREATE_OBJ_DIR=mkdir -p $(DIR_OBJ)
 
 #Build specifics.
-OPTIMIZATION=-O2
-#DEBUG=-g
+__TEMPLATE_OPTIMIZATION__
+__TEMPLATE_DEBUG__
 
 #Fixed compiler definitions.
 CC=g++
@@ -25,4 +25,4 @@ WARNING_FLAGS=-Wall -Wextra -Wundef -Wcast-align -Wwrite-strings -Wlogical-op -W
 FLAGS_BASE=-Wno-deprecated -ansi -pedantic -std=c++11 -fno-rtti $(SYSTEM_FLAGS)
 INCLUDES=-I $(DIR_LIBDANSDL_2) -I $(DIR_TOOLS) -I $(DIR_LOG)
 
-include _makefile_common
+include make/makefile_common
