@@ -1,3 +1,4 @@
 libdansdl2-tools.a
 objects/*
 makefile_linux
+makefile
