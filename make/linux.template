@@ -22,7 +22,7 @@ __TEMPLATE_DEBUG__
 #Fixed compiler definitions.
 CC=g++
 WARNING_FLAGS=-Wall -Wextra -Wundef -Wcast-align -Wwrite-strings -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -Woverloaded-virtual
-FLAGS_BASE=-Wno-deprecated -ansi -pedantic -std=c++11 -fno-rtti $(SYSTEM_FLAGS)
+FLAGS_BASE=-Wno-deprecated -ansi -pedantic -std=c++14 -fno-rtti $(SYSTEM_FLAGS)
 INCLUDES=-I $(DIR_LIBDANSDL_2) -I $(DIR_TOOLS) -I $(DIR_LOG)
 
 include make/makefile_common
