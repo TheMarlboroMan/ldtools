@@ -11,6 +11,10 @@ $(DIR_O)view_composer.o\
 all: create_obj $(ALL_OBJECTS)
 	ar rcs libdansdl2-tools.a $(ALL_OBJECTS)
 
+ifndef VERBOSE
+.SILENT:
+endif
+
 clean:
 	$(CLEAN)
 
