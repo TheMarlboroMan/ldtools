@@ -31,7 +31,7 @@ bool ttf_manager::exists(const std::string& _fontname, int _fontsize) const {
 void ttf_manager::erase(const std::string& _fontname, int _fontsize) {
 
 	if(!exists(_fontname, _fontsize)) {
-		throw std::runtime_error("ttf font "+f+" could not be erased");
+		throw std::runtime_error("ttf font "+_fontname+" could not be erased");
 	}
 
 	data.erase({_fontname, _fontsize});
