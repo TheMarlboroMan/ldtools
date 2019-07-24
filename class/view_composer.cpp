@@ -164,11 +164,10 @@ bool view_composer::id_exists(const std::string& id) const
 
 void view_composer::parse(const std::string& ruta, const std::string& nodo)
 {
-	dnot_token tok=tools::dnot_parse(ruta);
+	dnot_token tok=tools::dnot_parse_file(ruta);
 	const auto& lista=tok[nodo].get_vector();
+	for(const auto& token : lista) {
 
-	for(const auto& token : lista)
-	{
 		uptr_rep ptr;
 		const auto& tipo=token[type_key].get_string(); //Si no hay tipo vamos a explotar. Correcto.
 		int order=0;
@@ -177,52 +176,50 @@ void view_composer::parse(const std::string& ruta, const std::string& nodo)
 		else if(tipo==bitmap_key) ptr=std::move(create_bitmap(token));
 		else if(tipo==ttf_key) ptr=std::move(create_ttf(token));
 		else if(tipo==polygon_key) ptr=std::move(create_polygon(token));
-		else if(tipo==external_key)
-		{
+		else if(tipo==external_key) {
+
 			const std::string& ref=token[external_reference_key];
-			if(!external_map.count(ref))
-			{
+			if(!external_map.count(ref)) {
 				throw std::runtime_error("Key for '"+ref+"' has not been externally registered before parsing the file.");
 			}
 
-			if(token.key_exists(order_key)) 
-			{
+			if(token.key_exists(order_key)) {
 				order=token[order_key];
 			}
 
 			data.push_back(item(external_map[ref], order));
 			continue;
 		}
-		else if(tipo==screen_key) 
-		{
+		else if(tipo==screen_key) {
+
 			do_screen(token);
 			continue;
 		}
-		else if(tipo==definition_key)
-		{
+		else if(tipo==definition_key) {
+
 			do_definition(token);
 			continue;
 		}
-		else
-		{
+		else {
+
 			throw std::runtime_error("Unknown '"+tipo+"' when parsing view");
 		}
 
 		//Tratamiento de cosas comunes...
-		if(token.key_exists(order_key)) 
-		{
+		if(token.key_exists(order_key))  {
+
 			order=token[order_key];
 		}
 
 		//Tratamiento de cosas comunes...
-		if(token.key_exists(alpha_key))
-		{
+		if(token.key_exists(alpha_key)) {
+
 			ptr->set_blend(ldv::representation::blends::alpha);
 			ptr->set_alpha((Uint8)token[alpha_key].get_int());
 		}
 
-		if(token.key_exists(rotation_key))
-		{
+		if(token.key_exists(rotation_key)) {
+
 			auto values=token[rotation_key].get_vector();
 			if(values.size()!=3) throw std::runtime_error("Rotate needs three parameters");
 
@@ -231,22 +228,19 @@ void view_composer::parse(const std::string& ruta, const std::string& nodo)
 			rrot->set_rotation_center((int)values[1], (int)values[2]);
 		}
 
-		if(token.key_exists(visible_key))
-		{
+		if(token.key_exists(visible_key)) {
+
 			ptr->set_visible(token[visible_key].get_bool());
 		}
 
-		if(token.key_exists(id_key))
-		{
+		if(token.key_exists(id_key)) {
+
 			const std::string& id=token[id_key];
-			if(id_map.count(id))
-			{
+			if(id_map.count(id)) {
 				throw std::runtime_error("Repeated id key '"+token[id_key].get_string()+"' for view");
 			}
-			else
-			{
-				id_map[id]=ptr.get();
-			}
+
+			id_map[id]=ptr.get();
 		}
 
 		//Y finalmente insertamos.
@@ -264,8 +258,7 @@ void view_composer::parse(const std::string& ruta, const std::string& nodo)
 
 void view_composer::register_as_external(const std::string& clave, ldv::representation& rep)
 {
-	if(external_map.count(clave))
-	{
+	if(external_map.count(clave)) {
 		throw std::runtime_error("Repeated key "+clave+" for external representation");
 	}
 	
@@ -273,8 +266,7 @@ void view_composer::register_as_external(const std::string& clave, ldv::represen
 } 
 
 //!Creates a box from a token. Internal.
-view_composer::uptr_rep view_composer::create_box(const dnot_token& token)
-{
+view_composer::uptr_rep view_composer::create_box(const dnot_token& token) {
 	auto color=rgba_from_list(token[rgba_key]);
 	uptr_rep res(new ldv::box_representation(ldv::polygon_representation::type::fill, box_from_list(token[location_key]), color));
 	res->set_blend(ldv::representation::blends::alpha);
@@ -303,15 +295,13 @@ view_composer::uptr_rep view_composer::create_polygon(const dnot_token& token)
 //!Creates a bitmap from a token. Internal.
 view_composer::uptr_rep view_composer::create_bitmap(const dnot_token& token)
 {
-	if(!texture_map.count(token[texture_key]))
-	{
+	if(!texture_map.count(token[texture_key])) {
 		throw std::runtime_error("Unable to locate texture "+token[texture_key].get_string()+" for bitmap");
 	}
 
 	uptr_rep res(new ldv::bitmap_representation(*texture_map[token[texture_key]], box_from_list(token[location_key]), box_from_list(token[clip_key])));
 
-	if(token.key_exists(brush_key))
-	{		
+	if(token.key_exists(brush_key)) {
 		static_cast<ldv::bitmap_representation *>(res.get())->set_brush(token[brush_key][0], token[brush_key][1]);
 	}
 
@@ -321,8 +311,7 @@ view_composer::uptr_rep view_composer::create_bitmap(const dnot_token& token)
 //!Creates a ttf representation from a token. Internal.
 view_composer::uptr_rep view_composer::create_ttf(const dnot_token& token)
 {
-	if(!font_map.count(token[font_key]))
-	{
+	if(!font_map.count(token[font_key])) {
 		throw std::runtime_error("Unable to locate font "+token[font_key].get_string()+" for ttf");
 	}
 
@@ -335,15 +324,15 @@ view_composer::uptr_rep view_composer::create_ttf(const dnot_token& token)
 }
 
 //!Records screen color fill values. Internal.
-void view_composer::do_screen(const dnot_token& token)
-{
+void view_composer::do_screen(const dnot_token& token) {
+
 	screen_color=rgba_from_list(token[rgba_key]);
 	with_screen=true;
 }
 
 //!Records a definition. Internal.
-void view_composer::do_definition(const dnot_token& token)
-{
+void view_composer::do_definition(const dnot_token& token) {
+
 	const std::string& clave=token[definition_key_key].get_string();
 
 	if(int_definitions.count(clave)) throw std::runtime_error("Repeated definition for "+clave);

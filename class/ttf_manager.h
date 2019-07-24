@@ -35,6 +35,10 @@ class ttf_manager
 	const ldv::ttf_font&				get(const std::string&, int) const;
 	//!Inserts a font with the given alias and size using the path to the ttf file. Returns false if the font was already inserted.
 	bool						insert(const std::string&, int, const std::string&);
+	//!Returns true if the font with the given alias and size exists.
+	bool						exists(const std::string&, int) const;
+	//!Erases the fond with the given alias and size. Will throw if the font is not registered.
+	void						erase(const std::string&, int);
 
 	private:
 
