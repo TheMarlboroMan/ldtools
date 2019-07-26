@@ -268,7 +268,7 @@ void view_composer::register_as_external(const std::string& clave, ldv::represen
 //!Creates a box from a token. Internal.
 view_composer::uptr_rep view_composer::create_box(const dnot_token& token) {
 	auto color=rgba_from_list(token[rgba_key]);
-	uptr_rep res(new ldv::box_representation(ldv::polygon_representation::type::fill, box_from_list(token[location_key]), color));
+	uptr_rep res(new ldv::box_representation(box_from_list(token[location_key]), color, ldv::polygon_representation::type::fill));
 	res->set_blend(ldv::representation::blends::alpha);
 	return res;
 }
@@ -287,7 +287,7 @@ view_composer::uptr_rep view_composer::create_polygon(const dnot_token& token)
 	std::vector<ldv::point>	vp;
 	for(const auto& l : token[points_key].get_vector()) vp.push_back({l[0], l[1]});
 
-	uptr_rep res(new ldv::polygon_representation(t, vp, color));
+	uptr_rep res(new ldv::polygon_representation(vp, color, t));
 	res->set_blend(ldv::representation::blends::alpha);
 	return res;
 }
