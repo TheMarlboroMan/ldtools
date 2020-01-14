@@ -1,14 +1,9 @@
 set(SOURCE
 	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/animation_table.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/animation_table.h
 	${CMAKE_CURRENT_SOURCE_DIR}/fps_counter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/fps_counter.h
 	${CMAKE_CURRENT_SOURCE_DIR}/sprite_table.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/sprite_table.h
 	${CMAKE_CURRENT_SOURCE_DIR}/ttf_manager.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ttf_manager.h
 	${CMAKE_CURRENT_SOURCE_DIR}/view_composer.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/view_composer.h
 	PARENT_SCOPE
 )

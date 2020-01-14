@@ -1,18 +1,16 @@
-#ifndef TOOLS_SPRITE_TABLE_H
-#define TOOLS_SPRITE_TABLE_H
+#pragma once
+
+//LibDanSDL2 deps.
+#include <ldv/rect.h>
+
+//Tools deps.
+#include <tools/text_reader.h>
 
 #include <fstream>
 #include <map>
 #include <vector>
 
-//LibDanSDL2 deps.
-#include <video/rect/rect.h>
-
-//Tools deps.
-#include <class/text_reader.h>
-
-namespace tools
-{
+namespace ldtools {
 
 //!A frame for the sprite table consisting of the size and position of the
 //!sprite plus a possible displacement pair.
@@ -73,5 +71,3 @@ class sprite_table {
 };
 
 }
-
-#endif

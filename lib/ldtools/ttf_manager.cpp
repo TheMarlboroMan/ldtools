@@ -1,8 +1,8 @@
-#include "ttf_manager.h"
+#include <ldtools/ttf_manager.h>
 
 #include <stdexcept>
 
-using namespace tools;
+using namespace ldtools;
 
 const ldv::ttf_font& ttf_manager::get(const std::string& f, int t) const {
 

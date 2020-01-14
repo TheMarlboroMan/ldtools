@@ -1,10 +1,10 @@
-#include "sprite_table.h"
+#include <ldtools/sprite_table.h>
 
 //Tools deps.
-#include <source/string_utils.h>
-#include <templates/compatibility_patches.h>
+#include <tools/string_utils.h>
+#include <tools/compatibility_patches.h>
 
-using namespace tools;
+using namespace ldtools;
 
 sprite_table::sprite_table(const std::string& path) {
 	load(path);

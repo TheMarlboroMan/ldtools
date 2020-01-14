@@ -1,14 +1,11 @@
-#ifndef TOOLS_FPS_COUNTER_H
-#define TOOLS_FPS_COUNTER_H
-
+#pragma once
 
 #include <SDL2/SDL.h>
 #include <vector>
 #include <algorithm>
 #include <chrono>
 
-namespace tools
-{
+namespace ldtools {
 
 //!Frames-per-second counter: produces the quantity of FPS when there's drawing
 //!involved.
@@ -47,4 +44,3 @@ class fps_counter {
 };
 
 }
-#endif

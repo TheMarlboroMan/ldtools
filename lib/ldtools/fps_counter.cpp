@@ -1,7 +1,7 @@
-#include "fps_counter.h"
+#include <ldtools/fps_counter.h>
 #include <iostream>
 
-using namespace tools;
+using namespace dstools;
 
 fps_counter::fps_counter():
 	ticks_count(t_clock::now()), 

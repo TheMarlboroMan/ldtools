@@ -1,19 +1,17 @@
-#ifndef TOOLS_TTF_MANAGER_H
-#define TOOLS_TTF_MANAGER_H
+#pragma once
+
+#include <ldv/ttf_font.h>
 
 #include <map>
 #include <string>
 
-#include <video/ttf_font/ttf_font.h>
-
-namespace tools
-{
+namespace ldtools {
 
 /*
 Un gestor de data ttf. Almacena una clave de texto o y un entero con una fuente
 ttf y un sizeaño. Se trabaja en dos pasos:
 
-- 1: registrar la fuente con registrar_fuente("alias", sizeaño, "ruta_ttf");
+- 1: registrar la fuente con registrar_fuente("alias", size, "ruta_ttf");
 - 2: obtener la referencia a la fuente con obtener_fuente("alias"; sizeaño);
 
 En caso de no existir la fuente se lanzará un std::runtime_error.
@@ -27,8 +25,7 @@ En caso de no existir la fuente se lanzará un std::runtime_error.
 //!register the font with insert("alias", size, ttf_font path) and then
 //!getting it with get("alias", size").
 
-class ttf_manager
-{
+class ttf_manager {
 	public:
 
 	//!Returs the stored font with the alias and size. Will throw std::runtime_error if the font is not registered in the given size.
@@ -59,5 +56,3 @@ class ttf_manager
 };
 
 }
-
-#endif

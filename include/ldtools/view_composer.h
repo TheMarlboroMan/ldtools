@@ -1,16 +1,18 @@
-#ifndef TOOLS_VIEW_COMPOSER_H
-#define TOOLS_VIEW_COMPOSER_H
+#pragma once
+
+//LibdanSDL deps.
+#include <ldv/texture.h>
+#include <ldv/surface.h>
+#include <ldv/screen.h>
+#include <ldv/camera.h>
+#include <ldv/representation.h>
+
+//Tools deps.
+#include <tools/dnot_parser.h>
 
 #include <memory>
 
-//LibdanSDL deps.
-#include <def_video.h>
-
-//Tools deps.
-#include <class/dnot_parser.h>
-
-namespace tools
-{
+namespace ldtools {
 
 //!The view composer creates graphical presentations through configuration files with little coding and compiling.
 /**
@@ -95,8 +97,7 @@ polygon:
 	fill: "fill"|"line"				(type of fill)
 */
 
-class view_composer
-{
+class view_composer {
 	public:
 
 	typedef std::unique_ptr<ldv::representation> uptr_rep;	//!< Typedef to the internal Reprensetation type.
@@ -130,14 +131,11 @@ class view_composer
 
 	//!Internal template helper to get definitions.
 	template<typename T>
-	T get_definition(const std::string k, const std::map<std::string, T>& map) const
-	{
-		try
-		{
+	T get_definition(const std::string k, const std::map<std::string, T>& map) const {
+		try{
 			return map.at(k);
 		}
-		catch(std::exception& e)
-		{
+		catch(std::exception& e){
 			throw std::runtime_error("unable to locate definition of "+k);
 		}
 	}
@@ -179,27 +177,22 @@ class view_composer
 		int 				order;
 
 		item(uptr_rep&& pr, int porder=0)
-			:rep(std::move(pr)), ptr(rep.get()), order(porder)
-		{
+			:rep(std::move(pr)), ptr(rep.get()), order(porder) {
 
 		}
 
 		item(ldv::representation * p, int porder=0)
-			:rep(nullptr), ptr(p), order(porder)
-		{}
+			:rep(nullptr), ptr(p), order(porder) {}
 
-		bool operator<(const item& o) const
-		{
+		bool operator<(const item& o) const {
 			return order < o.order;
 		}
 
-		void draw(ldv::screen& p)
-		{
+		void draw(ldv::screen& p) {
 			ptr->draw(p);
 		}
 
-		void draw(ldv::screen& p, const ldv::camera& cam)
-		{
+		void draw(ldv::screen& p, const ldv::camera& cam) {
 			ptr->draw(p, cam);
 		}
 	};
@@ -229,5 +222,3 @@ class view_composer
 	ldv::rgba_color					screen_color;
 };
 }
-
-#endif

@@ -1,10 +1,10 @@
-#include "animation_table.h"
+#include <ldtools/animation_table.h> 
 
 //Tools deps.
-#include <source/string_utils.h>
-#include <templates/compatibility_patches.h>
+#include <tools/string_utils.h>
+#include <tools/compatibility_patches.h>
 
-using namespace tools;
+using namespace ldtools;
 
 animation::animation()
 	:name(), duration(0.0f) {

@@ -1,5 +1,6 @@
-#ifndef TOOLS_ANIMATION_TABLE_H
-#define TOOLS_ANIMATION_TABLE_H
+#pragma once
+
+#include "sprite_table.h"
 
 #include <map>
 #include <vector>
@@ -7,10 +8,7 @@
 #include <sstream>
 #include <iterator>
 
-#include "sprite_table.h"
-
-namespace tools
-{
+namespace ldtools {
 
 //!Defines a sprite animation frame.
 struct animation_line {
@@ -118,5 +116,3 @@ class animation_table {
 };
 
 }
-
-#endif

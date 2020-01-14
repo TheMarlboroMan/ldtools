@@ -1,8 +1,8 @@
-#include "view_composer.h"
+#include <ldtools/view_composer.h>
 
 #include <algorithm>
 
-using namespace tools;
+using namespace ldtools;
 
 const std::string view_composer::type_key="type";
 const std::string view_composer::box_key="box";
