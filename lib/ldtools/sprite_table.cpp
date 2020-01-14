@@ -22,7 +22,8 @@ sprite_frame sprite_table::get(size_t index) {
 }
 
 void sprite_table::load(const std::string& path) {
-	text_reader L(path, '#');
+
+	tools::text_reader L(path, '#');
 
 	if(!L){
 		throw std::runtime_error(std::string("Unable to locate sprite file ")+path);
@@ -37,7 +38,7 @@ void sprite_table::load(const std::string& path) {
 				break;
 			}
 
-			std::vector<std::string> values=explode(line, delimiter);
+			std::vector<std::string> values=tools::explode(line, delimiter);
 			if(values.size()==7) {
 				sprite_frame f;
 				size_t index=std::atoi(values[0].c_str());

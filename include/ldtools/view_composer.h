@@ -6,6 +6,7 @@
 #include <ldv/screen.h>
 #include <ldv/camera.h>
 #include <ldv/representation.h>
+#include <ldv/ttf_font.h>
 
 //Tools deps.
 #include <tools/dnot_parser.h>
@@ -198,16 +199,16 @@ class view_composer {
 	};
 
 
-	uptr_rep		create_box(const dnot_token&);
-	uptr_rep		create_bitmap(const dnot_token&);
-	uptr_rep		create_ttf(const dnot_token&);
-	uptr_rep		create_polygon(const dnot_token&);
-	void			do_screen(const dnot_token&);
-	void			do_definition(const dnot_token&);
+	uptr_rep		create_box(const tools::dnot_token&);
+	uptr_rep		create_bitmap(const tools::dnot_token&);
+	uptr_rep		create_ttf(const tools::dnot_token&);
+	uptr_rep		create_polygon(const tools::dnot_token&);
+	void			do_screen(const tools::dnot_token&);
+	void			do_definition(const tools::dnot_token&);
 
-	ldv::rect		box_from_list(const dnot_token&);
-	ldv::rgba_color		rgba_from_list(const dnot_token&);
-	position		position_from_list(const dnot_token&);
+	ldv::rect		box_from_list(const tools::dnot_token&);
+	ldv::rgba_color		rgba_from_list(const tools::dnot_token&);
+	position		position_from_list(const tools::dnot_token&);
 
 	std::vector<item>				data;
 	std::map<std::string, ldv::representation*>	id_map;

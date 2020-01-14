@@ -51,7 +51,7 @@ animation_table::animation_table(const sprite_table& t, const std::string& ruta)
 
 void animation_table::load(const std::string& ruta) {
 
-	text_reader L(ruta, '#');
+	tools::text_reader L(ruta, '#');
 
 	if(!L) {
 		throw std::runtime_error(std::string("Unable to locate animation file ")+ruta);
@@ -105,7 +105,7 @@ void animation_table::load(const std::string& ruta) {
 size_t animation_table::read_header(const std::string& linea) {
 
 	const char separador='\t';
-	const std::vector<std::string> valores=explode(linea, separador);
+	const std::vector<std::string> valores=tools::explode(linea, separador);
 	if(valores.size()==1) {
 
 		int id=std::atoi(valores[0].c_str());
@@ -119,7 +119,7 @@ size_t animation_table::read_header(const std::string& linea) {
 void animation_table::read_line(const std::string& linea, animation& animacion) {
 
 	const char separador='\t';
-	std::vector<std::string> valores=explode(linea, separador);
+	std::vector<std::string> valores=tools::explode(linea, separador);
 	if(valores.size()==2) {
 		int duration=std::atoi(valores[0].c_str());
 		int indice_frame=std::atoi(valores[1].c_str());
