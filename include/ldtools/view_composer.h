@@ -8,20 +8,22 @@
 #include <ldv/representation.h>
 #include <ldv/ttf_font.h>
 
-//Tools deps.
-#include <tools/dnot_parser.h>
+//External deps.
+#include <rapidjson/document.h>
 
 #include <memory>
+#include <map>
+#include <string>
 
 namespace ldtools {
 
 //!The view composer creates graphical presentations through configuration files with little coding and compiling.
 /**
-It works in two stages: a dnot configuration file which defines the elements
+It works in two stages: a json configuration file which defines the elements
 to be drawn and a code snippet to connect textures and fonts to it. Once the
 file is done and the resources are connected to the composer, a call to
-"parse" with the filename and the view node (dnots can have many root nodes)
-will mount the view and the call to "draw" will draw it.
+"parse" with the filename and the view node will mount the view and the call to
+"draw" will draw it.
 
 Elements drawn can be internal or external. Internal elements have an id that
 can be used in code to manipulate them. External elements exist in code and
@@ -48,8 +50,8 @@ the resource. These links or "maps" need to be done before "parse" is called!.
 In the file, "type" corresponds either to a definition or a representation.
 Definitions can be integer or float values that can be used outside the
 composer (that is, in the code, through the get_int or get_float values) to
-avoid recompilation. So far, considering how the file is parsed as a regular
-dnot, there is no support for internal definitions.
+avoid recompilation.
+
 Definitions are expressed like this:
 
 	{type:"define", key:"my_key", value:32}
@@ -103,8 +105,8 @@ class view_composer {
 
 	typedef std::unique_ptr<ldv::representation> uptr_rep;	//!< Typedef to the internal Reprensetation type.
 
-				view_composer();
-	void			parse(const std::string&, const std::string&);
+					view_composer();
+	void			parse(const rapidjson::Value&);
 	void			draw(ldv::screen&);
 	void			draw(ldv::screen&, const ldv::camera&);
 	void			map_texture(const std::string&, ldv::texture *);
@@ -141,32 +143,32 @@ class view_composer {
 		}
 	}
 
-	static const std::string		type_key;
-	static const std::string		box_key;
-	static const std::string		bitmap_key;
-	static const std::string		text_key;
-	static const std::string		ttf_key;
-	static const std::string		polygon_key;
-	static const std::string		screen_key;
-	static const std::string		definition_key;
-	static const std::string		definition_key_key;
-	static const std::string		definition_key_value;
-	static const std::string		order_key;
-	static const std::string		alpha_key;
-	static const std::string		id_key;
-	static const std::string		rgba_key;
-	static const std::string		location_key;
-	static const std::string		clip_key;
-	static const std::string		points_key;
-	static const std::string		polygon_fill_key;
-	static const std::string		texture_key;
-	static const std::string		surface_key;
-	static const std::string		font_key;
-	static const std::string		brush_key;
-	static const std::string		visible_key;
-	static const std::string		external_key;
-	static const std::string		external_reference_key;
-	static const std::string		rotation_key;
+	static const char *		type_key;
+	static const char *		box_key;
+	static const char *		bitmap_key;
+	static const char *		text_key;
+	static const char *		ttf_key;
+	static const char *		polygon_key;
+	static const char *		screen_key;
+	static const char *		definition_key;
+	static const char *		definition_key_key;
+	static const char *		definition_key_value;
+	static const char *		order_key;
+	static const char *		alpha_key;
+	static const char *		id_key;
+	static const char *		rgba_key;
+	static const char *		location_key;
+	static const char *		clip_key;
+	static const char *		points_key;
+	static const char *		polygon_fill_key;
+	static const char *		texture_key;
+	static const char *		surface_key;
+	static const char *		font_key;
+	static const char *		brush_key;
+	static const char *		visible_key;
+	static const char *		external_key;
+	static const char *		external_reference_key;
+	static const char *		rotation_key;
 
 	struct position{int x, y;};
 
@@ -199,16 +201,16 @@ class view_composer {
 	};
 
 
-	uptr_rep		create_box(const tools::dnot_token&);
-	uptr_rep		create_bitmap(const tools::dnot_token&);
-	uptr_rep		create_ttf(const tools::dnot_token&);
-	uptr_rep		create_polygon(const tools::dnot_token&);
-	void			do_screen(const tools::dnot_token&);
-	void			do_definition(const tools::dnot_token&);
+	uptr_rep		create_box(const rapidjson::Value&);
+	uptr_rep		create_bitmap(const rapidjson::Value&);
+	uptr_rep		create_ttf(const rapidjson::Value&);
+	uptr_rep		create_polygon(const rapidjson::Value&);
+	void			do_screen(const rapidjson::Value&);
+	void			do_definition(const rapidjson::Value&);
 
-	ldv::rect		box_from_list(const tools::dnot_token&);
-	ldv::rgba_color		rgba_from_list(const tools::dnot_token&);
-	position		position_from_list(const tools::dnot_token&);
+	ldv::rect		box_from_list(const rapidjson::Value&);
+	ldv::rgba_color		rgba_from_list(const rapidjson::Value&);
+	position		position_from_list(const rapidjson::Value&);
 
 	std::vector<item>				data;
 	std::map<std::string, ldv::representation*>	id_map;
