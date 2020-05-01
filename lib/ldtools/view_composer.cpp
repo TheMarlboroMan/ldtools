@@ -157,7 +157,7 @@ void view_composer::parse(const rapidjson::Value& _root) {
 	for(const auto& token : _root.GetArray()) {
 
 		uptr_rep ptr;
-		const auto& tipo=token[type_key].GetString(); //Si no hay tipo vamos a explotar. Correcto.
+		const std::string tipo{token[type_key].GetString()}; //Si no hay tipo vamos a explotar. Correcto.
 		int order=0;
 
 		if(tipo==box_key) ptr=std::move(create_box(token));
