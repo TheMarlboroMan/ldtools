@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(libldtools)
 
-option(BUILD_STATIC "Build a static library" OFF)
 option(BUILD_DEBUG "Build a debug release" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -25,11 +24,12 @@ include_directories("include" ${LOG_DIR} ${TOOLS_DIR} ${DANSDL2_DIR})
 set(SOURCE "")
 add_subdirectory("${PROJECT_SOURCE_DIR}/lib")
 
-if(${BUILD_STATIC})
-	add_library(ldtools STATIC ${SOURCE})
-else()
-	add_library(ldtools SHARED ${SOURCE})
-endif()
+add_library(ldtools_static STATIC ${SOURCE})
+set_target_properties(ldtools_static PROPERTIES OUTPUT_NAME ldtools)
 
-install(TARGETS ldtools DESTINATION lib)
+add_library(ldtools_shared SHARED ${SOURCE})
+set_target_properties(ldtools_shared PROPERTIES OUTPUT_NAME ldtools)
+
+install(TARGETS ldtools_static DESTINATION lib)
+install(TARGETS ldtools_shared DESTINATION lib)
 install(DIRECTORY include/ DESTINATION include)
