@@ -135,10 +135,13 @@ class view_composer {
 	//!Internal template helper to get definitions.
 	template<typename T>
 	T get_definition(const std::string k, const std::map<std::string, T>& map) const {
+
 		try{
+
 			return map.at(k);
 		}
 		catch(std::exception& e){
+
 			throw std::runtime_error("unable to locate definition of "+k);
 		}
 	}
@@ -147,6 +150,7 @@ class view_composer {
 	static const char *		box_key;
 	static const char *		bitmap_key;
 	static const char *		text_key;
+	static const char *		text_line_height_ratio_key;
 	static const char *		ttf_key;
 	static const char *		polygon_key;
 	static const char *		screen_key;
@@ -222,6 +226,7 @@ class view_composer {
 	std::map<std::string, float>			float_definitions;
 
 	bool 						with_screen;
-	ldv::rgba_color					screen_color;
+	ldv::rgba_color				screen_color;
+
 };
 }

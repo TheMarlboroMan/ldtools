@@ -29,6 +29,7 @@ const char * view_composer::clip_key="clip";
 const char * view_composer::points_key="points";
 const char * view_composer::polygon_fill_key="fill";
 const char * view_composer::text_key="text";
+const char * view_composer::text_line_height_ratio_key="line_height_ratio";
 const char * view_composer::surface_key="surface";
 const char * view_composer::font_key="font";
 const char * view_composer::texture_key="texture";
@@ -129,18 +130,22 @@ void view_composer::map_font(const std::string& clave, const ldv::ttf_font& fuen
 //!to be done by casting the pointer (static_cast<ldv::bitmap_representation *>)
 //!to the necessary type.
 
-ldv::representation * view_composer::get_by_id(const std::string& id) {
+ldv::representation * view_composer::get_by_id(const std::string& _id) {
+
 	try {
-		return id_map.at(id);
+
+		return id_map.at(_id);
 	}
 	catch(std::exception& e) {
-		throw std::runtime_error("Unable to locate element with id "+id+". Is the view mounted?");
+
+		throw std::runtime_error("Unable to locate element with id "+_id+". Is the view mounted?");
 	}
 }
 
 //!Checks if there exists a representation with the given id.
 
 bool view_composer::id_exists(const std::string& id) const {
+
 	return id_map.count(id);
 }
 
@@ -329,6 +334,11 @@ view_composer::uptr_rep view_composer::create_ttf(const rapidjson::Value& token)
 	);
 	res->set_blend(ldv::representation::blends::alpha);
 
+	if(token.HasMember(text_line_height_ratio_key)) {
+
+		static_cast<ldv::ttf_representation *>(res.get())->set_line_height_ratio(token[text_line_height_ratio_key].GetDouble());
+	}
+
 	auto pos=position_from_list(token[location_key]);
 	res->go_to({pos.x, pos.y});
 	return res;
@@ -344,13 +354,22 @@ void view_composer::do_screen(const rapidjson::Value& token) {
 //!Records a definition. Internal.
 void view_composer::do_definition(const rapidjson::Value& token) {
 
-	const std::string& clave=token[definition_key_key].GetString();
+	const std::string clave{token[definition_key_key].GetString()};
 
-	if(int_definitions.count(clave)) throw std::runtime_error("Repeated definition for "+clave);
+	if(int_definitions.count(clave)) {
 
-	if(token[definition_key_value].IsInt()) int_definitions[clave]=token[definition_key_value].GetInt();
-	else if(token[definition_key_value].IsFloat()) float_definitions[clave]=token[definition_key_value].GetFloat();
-	else throw std::runtime_error("Invalid data type for definition.");
+		throw std::runtime_error("repeated definition in view composer for "+clave);
+	}
+
+	if(token[definition_key_value].IsInt()) {
+
+		int_definitions[clave]=token[definition_key_value].GetInt();
+	}
+	else if(token[definition_key_value].IsFloat()) {
+
+		float_definitions[clave]=token[definition_key_value].GetFloat();
+	}
+	else throw std::runtime_error("invalid data type in view composer for definition. Is the view mounted?");
 }
 
 //!Creates a box from a token. Internal.
@@ -363,6 +382,7 @@ ldv::rect view_composer::box_from_list(const rapidjson::Value& tok) {
 
 //!Creates a rgba from a token. Internal.
 ldv::rgba_color view_composer::rgba_from_list(const rapidjson::Value& tok) {
+
 	try {
 		const auto& values=tok.GetArray();
 		int r=values[0].GetInt(), g=values[1].GetInt(), b=values[2].GetInt(), a=values[3].GetInt();
@@ -386,6 +406,7 @@ view_composer::position view_composer::position_from_list(const rapidjson::Value
 //!Representations, id maps and external references are cleared. Definitions
 //!are not.
 void view_composer::clear_view() {
+
 	data.clear();
 	id_map.clear();
 	external_map.clear();
@@ -393,6 +414,7 @@ void view_composer::clear_view() {
 
 //!Clears all definitions.
 void view_composer::clear_definitions() {
+
 	int_definitions.clear();
 	float_definitions.clear();
 }
@@ -401,6 +423,7 @@ void view_composer::clear_definitions() {
 
 //!Will throw if the definition does not exist.
 int view_composer::get_int(const std::string& k) const {
+
 	return get_definition(k, int_definitions);
 }
 
