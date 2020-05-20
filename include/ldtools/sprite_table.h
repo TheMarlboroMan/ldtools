@@ -51,22 +51,28 @@ class sprite_table {
 	//!Initializes the table with the file at the given path. Will throw
 	//!std::runtime error if the file cannot be found or has an invalid
 	//!format.
-							sprite_table(const std::string&);
+	                        sprite_table(const std::string&);
+
+	//!Default constructor, builds an empty sprite table.
+	                        sprite_table();
 
 	//!Loads/reloads the table with the given file path. Will throw with
 	//!std::runtime_error if the file cannot be found or has an invalid
-	//!format.
-	void 						load(const std::string&);
+	//!format.On failure, the data is guaranteed to be empty.
+	void                    load(const std::string&);
 
 	//!Returns the frame at the given index.
-	const sprite_frame& 				get(size_t) const;
+	const sprite_frame&     at(size_t) const;
 
 	//!Returns the frame at the given index.
-	sprite_frame 					get(size_t);
+	sprite_frame            get(size_t) const;
+
+	//!Returns the size of the table.
+	size_t                  size() const {return data.size();}
 
 	private:
 
-	std::map<size_t, sprite_frame> 			data;	//!< Internal data storage.
+	std::map<size_t, sprite_frame>  data;	//!< Internal data storage.
 
 };
 

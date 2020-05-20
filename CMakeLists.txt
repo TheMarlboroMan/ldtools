@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(libldtools)
 
+option(BUILD_TESTS "Build test code" ON)
 option(BUILD_DEBUG "Build a debug release" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -32,3 +33,19 @@ set_target_properties(ldtools_shared PROPERTIES OUTPUT_NAME ldtools)
 install(TARGETS ldtools_static DESTINATION lib)
 install(TARGETS ldtools_shared DESTINATION lib)
 install(DIRECTORY include/ DESTINATION include)
+
+if(${BUILD_TESTS})
+
+	add_library(dansdl2 SHARED IMPORTED)
+	set_target_properties(dansdl2 PROPERTIES IMPORTED_LOCATION /usr/local/lib/libdansdl2.so)
+
+	add_library(tools SHARED IMPORTED)
+	set_target_properties(tools PROPERTIES IMPORTED_LOCATION /usr/local/lib/libtools.so)
+
+	add_library(lm SHARED IMPORTED)
+	set_target_properties(lm PROPERTIES IMPORTED_LOCATION /usr/local/lib/liblm.so)
+
+	add_executable(sprite_table tests/sprite_table/main.cpp)
+	target_link_libraries(sprite_table ldtools_shared tools dansdl2 lm SDL2 SDL2_ttf SDL2_mixer SDL2_image GL)
+	add_custom_command(TARGET sprite_table POST_BUILD COMMAND cp -r ../tests/sprite_table/*.txt ./)
+endif()
