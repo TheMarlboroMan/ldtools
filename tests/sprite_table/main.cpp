@@ -87,35 +87,83 @@ int main(int, char **) {
 		}
 
 		//Assert get.
-		sprite=table.get(1);
+		sprite=table.get(0);
 		if(!check_frame(sprite, 1, 2, 3, 4, 5, 6)) {
-			throw std::runtime_error("failed to assert validity of frame 1");
+			throw std::runtime_error("failed to assert validity of frame 0");
 		}
 
 		//Assert reference get
-		const auto& refsprite=table.get(2);
+		const auto& refsprite=table.get(1);
 		if(!check_frame(refsprite, 7, 8, 9, 10, 11, 12)) {
+			throw std::runtime_error("failed to assert validity of frame 1");
+		}
+
+		if(!check_frame(table.get(2), 13, 14, 15, 16, 17, 18)) {
 			throw std::runtime_error("failed to assert validity of frame 2");
 		}
 
-		if(!check_frame(table.get(3), 13, 14, 15, 16, 17, 18)) {
+		if(!check_frame(table.get(3), 19, 20, 21, 22, 23, 24)) {
 			throw std::runtime_error("failed to assert validity of frame 3");
 		}
 
-		if(!check_frame(table.get(4), 19, 20, 21, 22, 23, 24)) {
+		//Assert good table values.
+		if(!check_frame(table.get(4), 25, 26, 27, 28, 29, 30)) {
 			throw std::runtime_error("failed to assert validity of frame 4");
 		}
 
-		//Assert good table values.
-		if(!check_frame(table.get(5), 25, 26, 27, 28, 29, 30)) {
+		//Assert a frame can be manually inserted...
+		table.add(5, {31, 32, 33, 34, 35, 36});
+		if(6!=table.size()) {
+			throw std::runtime_error("failed to assert size after add");
+		}
+
+		if(!check_frame(table.get(5), 31, 32, 33, 34, 35, 36)) {
 			throw std::runtime_error("failed to assert validity of frame 5");
+		}
+
+		//Assert a frame can be erased...
+		table.erase(3);
+		if(5!=table.size()) {
+			throw std::runtime_error("failed to assert size after erase");
+		}
+
+		//Assert the internal data structure holds.
+		if(!check_frame(table.get(4), 25, 26, 27, 28, 29, 30)) {
+			throw std::runtime_error("failed to assert validity of frame 3 after erasing");
+		}
+
+		if(!check_frame(table.get(5), 31, 32, 33, 34, 35, 36)) {
+			throw std::runtime_error("failed to assert validity of frame 5 after erasing");
+		}
+
+		//Add three again...
+		table.add(3, {37, 38, 39, 40, 41, 42});
+		if(6!=table.size()) {
+			throw std::runtime_error("failed to assert size after add");
+		}
+
+		if(!check_frame(table.get(3), 37, 38, 39, 40, 41, 42)) {
+			throw std::runtime_error("failed to assert validity of new frame 3");
+		}
+
+		//Assert it cannot be added twice.
+		try {
+			table.add(3, {37, 38, 39, 40, 41, 42});
+			throw std::runtime_error(errsentry);
+		}
+		catch(std::exception& e) {
+		
+			if(e.what() == errsentry) {
+
+				throw std::runtime_error("failed to assert that a frame cannot be added twice");
+			}
 		}
 
 		std::cout<<"all good"<<std::endl;
 
 		return 0;
 	}
-	catch(std::runtime_error &e) {
+	catch(std::exception &e) {
 
 		std::cerr<<"error: "<<e.what()<<std::endl;
 		return 1;

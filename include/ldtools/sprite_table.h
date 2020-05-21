@@ -18,32 +18,28 @@ namespace ldtools {
 struct sprite_frame {
 	public:
 
-	int 			x,	//!< X position in the sheet.
-				y;	//!< Y position in the sheet.
-	unsigned int 		w, 	//!< Width.
-				h;	//!< Height.
-	int 			disp_x, //!< Horizontal displacement.
-				disp_y;	//!< Vertical displacement.
+	int             x,	//!< X position in the sheet.
+                    y;	//!< Y position in the sheet.
+	unsigned int    w, 	//!< Width.
+                    h;	//!< Height.
+	int             disp_x, //!< Horizontal displacement.
+                    disp_y;	//!< Vertical displacement.
 
 	//!Returns a libdansdl2 rect from the sprite.
-	ldv::rect		get_rect() const {return ldv::rect{x, y, w, h};}
+	ldv::rect       get_rect() const {return ldv::rect{x, y, w, h};}
 
 	//!Can be used to check that the sprite has been loaded. Will discard
 	//!unitialized sprites.
 	explicit operator bool() const {return x || y || w || h || disp_x || disp_y;}
-
-	//!Class constructor.
-	sprite_frame()
-		:x(0), y(0), w(0), h(0), disp_x(0), disp_y(0) {}
 };
 
 //!Alpha and resource agnostic sprite table: contains a collection of sprite
 //!frames loaded from a file with a specific format.
 
-//!The format used uses # to comment lines and tabs to separate values.
-//!# Frame id	X	Y	W	H	DESPX	DESPY
+//!The format used uses # to comment lines and whitespace to separate values.
+//!# X	Y	W	H	DESPX	DESPY
 //!# Standing.
-//!1	0	0	22	32	0	0
+//!0	0	22	32	0	0
 
 class sprite_table {
 	public:
@@ -56,10 +52,16 @@ class sprite_table {
 	//!Default constructor, builds an empty sprite table.
 	                        sprite_table();
 
+	//!Adds a frame. Throws if the index is already used.
+	sprite_table&           add(size_t, const sprite_frame&);
+
+	//!Removes the frame from the given index.
+	sprite_table&           erase(size_t);
+
 	//!Loads/reloads the table with the given file path. Will throw with
 	//!std::runtime_error if the file cannot be found or has an invalid
 	//!format.On failure, the data is guaranteed to be empty.
-	void                    load(const std::string&);
+	sprite_table&           load(const std::string&);
 
 	//!Returns the frame at the given index.
 	const sprite_frame&     at(size_t) const;
