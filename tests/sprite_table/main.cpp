@@ -24,19 +24,11 @@ int main(int, char **) {
 			throw std::runtime_error("failed to assert that the table is empty");
 		}
 
-		//Assert that regular get will return an empty sprite.
-		//Tests also the bool operator for the sprite.
-		auto sprite=table.get(0);
-		if(sprite) {
-
-			throw std::runtime_error("failed to assert that default frame is empty");
-		}
-
 		const std::string errsentry{"error"};
 
 		//Assert that reference get will throw.
 		try {
-			const ldtools::sprite_frame& ref_sprite=table.at(1);
+			const auto& ref_sprite=table.get(1);
 			std::cout<<ref_sprite.x<<std::endl; //Silence the compiler warning....
 			throw std::runtime_error(errsentry);
 		}
@@ -87,7 +79,7 @@ int main(int, char **) {
 		}
 
 		//Assert get.
-		sprite=table.get(0);
+		ldtools::sprite_frame sprite=table.get(0);
 		if(!check_frame(sprite, 1, 2, 3, 4, 5, 6)) {
 			throw std::runtime_error("failed to assert validity of frame 0");
 		}
@@ -111,51 +103,17 @@ int main(int, char **) {
 			throw std::runtime_error("failed to assert validity of frame 4");
 		}
 
-		//Assert a frame can be manually inserted...
-		table.add(5, {31, 32, 33, 34, 35, 36});
-		if(6!=table.size()) {
-			throw std::runtime_error("failed to assert size after add");
+		//Finally test the iterator change the values...
+		for(auto& pair : table) {
+
+		pair.second.x=pair.first+100;
 		}
 
-		if(!check_frame(table.get(5), 31, 32, 33, 34, 35, 36)) {
-			throw std::runtime_error("failed to assert validity of frame 5");
-		}
-
-		//Assert a frame can be erased...
-		table.erase(3);
-		if(5!=table.size()) {
-			throw std::runtime_error("failed to assert size after erase");
-		}
-
-		//Assert the internal data structure holds.
-		if(!check_frame(table.get(4), 25, 26, 27, 28, 29, 30)) {
-			throw std::runtime_error("failed to assert validity of frame 3 after erasing");
-		}
-
-		if(!check_frame(table.get(5), 31, 32, 33, 34, 35, 36)) {
-			throw std::runtime_error("failed to assert validity of frame 5 after erasing");
-		}
-
-		//Add three again...
-		table.add(3, {37, 38, 39, 40, 41, 42});
-		if(6!=table.size()) {
-			throw std::runtime_error("failed to assert size after add");
-		}
-
-		if(!check_frame(table.get(3), 37, 38, 39, 40, 41, 42)) {
-			throw std::runtime_error("failed to assert validity of new frame 3");
-		}
-
-		//Assert it cannot be added twice.
-		try {
-			table.add(3, {37, 38, 39, 40, 41, 42});
-			throw std::runtime_error(errsentry);
-		}
-		catch(std::exception& e) {
-		
-			if(e.what() == errsentry) {
-
-				throw std::runtime_error("failed to assert that a frame cannot be added twice");
+		//And test the const iterator with the changed values.
+		for(const auto& pair : table) {
+	
+			if(pair.second.x!=100+(int)pair.first) {
+				throw std::runtime_error("failed to assert that the iterator worked");
 			}
 		}
 

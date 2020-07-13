@@ -14,16 +14,18 @@ sprite_table::sprite_table(const std::string& _path) {
 	load(_path);
 }
 
-const sprite_frame& sprite_table::at(size_t _index) const {
+bool sprite_table::exists(size_t _index) const {
 
-	return data.at(_index);
+	return data.count(_index);
 }
 
-sprite_frame sprite_table::get(size_t _index) const {
+const sprite_frame& sprite_table::get(size_t _index) const {
 
-	return data.count(_index)
-		? data.at(_index) //TODO: Could const-cast out the constness out and use [].
-		: sprite_frame();
+	if(!data.count(_index)) {
+		throw sprite_table_exception(std::string{"cannot get invalid index "}+std::to_string(_index));
+	}
+
+	return data.at(_index);
 }
 
 sprite_table& sprite_table::load(const std::string& _path) {
@@ -31,7 +33,7 @@ sprite_table& sprite_table::load(const std::string& _path) {
 	std::ifstream input_file(_path);
 
 	if(!input_file){
-		throw std::runtime_error(std::string("Unable to locate sprite file ")+_path);
+		throw sprite_table_exception(std::string{"Unable to locate sprite file "}+_path);
 	}
 
 	std::stringstream ss{};
@@ -61,33 +63,11 @@ sprite_table& sprite_table::load(const std::string& _path) {
 		if(ss.fail()) {
 
 			data.clear();
-			throw std::runtime_error(std::string("Malformed sprite line in ")+_path+std::string(" : ")+line);
+			throw sprite_table_exception(std::string{"Malformed sprite line in "}+_path+" : "+line);
 		}
 
-		add(index, f);
+		data.insert(std::make_pair(index, f));
 	}
 
-	return *this;
-}
-
-sprite_table& sprite_table::add(size_t _index, const sprite_frame& _f) {
-
-	if(data.count(_index)) {
-
-		throw std::runtime_error("frame already exists");
-	}
-
-	data[_index]=_f;
-	return *this;
-}
-
-sprite_table& sprite_table::erase(size_t _index) {
-
-	if(!data.count(_index)) {
-	
-		throw std::runtime_error("invalid index "+std::to_string(_index)+" for erase");
-	}
-
-	data.erase(_index);
 	return *this;
 }
