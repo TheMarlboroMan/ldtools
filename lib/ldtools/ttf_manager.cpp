@@ -38,3 +38,8 @@ void ttf_manager::erase(const std::string& _fontname, int _fontsize) {
 
 	data.erase({_fontname, _fontsize});
 }
+
+void ttf_manager::clear() {
+
+	data.clear();
+}
