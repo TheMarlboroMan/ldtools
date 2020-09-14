@@ -15,8 +15,10 @@ const ldv::ttf_font& ttf_manager::get(const std::string& f, int t) const {
 
 bool ttf_manager::insert(const std::string& f, int t, const std::string& r)
 {
+
 	if(!exists(f, t)) {
-		data.insert( std::pair<font_info, ldv::ttf_font>({f, t}, ldv::ttf_font(r, t) ) );
+
+		data.emplace( font_info{f, t}, ldv::ttf_font(r, t) );
 		return true;
 	}
 
