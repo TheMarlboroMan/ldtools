@@ -15,10 +15,13 @@ const ldv::ttf_font& ttf_manager::get(const std::string& f, int t) const {
 
 bool ttf_manager::insert(const std::string& f, int t, const std::string& r)
 {
-
 	if(!exists(f, t)) {
 
-		data.emplace( font_info{f, t}, ldv::ttf_font(r, t) );
+		data.emplace(
+			std::piecewise_construct,
+			std::forward_as_tuple(font_info{f, t}),
+			std::forward_as_tuple(ldv::ttf_font(r, t))
+		);
 		return true;
 	}
 
