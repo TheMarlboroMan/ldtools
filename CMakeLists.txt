@@ -18,10 +18,6 @@ add_compile_options(-Wall -Wextra -Wundef -Wcast-align -Wwrite-strings -Wlogical
 
 #Add the include directories
 include_directories("include")
-include_directories("${CMAKE_CURRENT_LIST_DIR}/../log/include/")
-include_directories("${CMAKE_CURRENT_LIST_DIR}/../libdansdl2/include/")
-include_directories("${CMAKE_CURRENT_LIST_DIR}/../rapidjson/include/")
-include_directories("${CMAKE_CURRENT_LIST_DIR}/../tools/include/")
 
 set(SOURCE "")
 add_subdirectory("${PROJECT_SOURCE_DIR}/lib")
@@ -40,6 +36,11 @@ IF(WIN32)
 	target_compile_definitions(ldtools_static PUBLIC -DWINBUILD)
 	target_compile_definitions(ldtools_shared PUBLIC -DWINBUILD)
 
+	include_directories("${CMAKE_CURRENT_LIST_DIR}/../log/include/")
+	include_directories("${CMAKE_CURRENT_LIST_DIR}/../libdansdl2/include/")
+	include_directories("${CMAKE_CURRENT_LIST_DIR}/../rapidjson/include/")
+	include_directories("${CMAKE_CURRENT_LIST_DIR}/../tools/include/")
+	
 	add_library(lm SHARED IMPORTED)
 	set_target_properties(lm PROPERTIES IMPORTED_LOCATION "C:/Program Files (x86)/lm/lib/liblm.dll")
 	set_target_properties(lm PROPERTIES IMPORTED_IMPLIB "C:/Program Files (x86)/lm/lib/liblm.dll")
