@@ -70,12 +70,14 @@ if(${BUILD_TESTS})
 	if(WIN32)
 	
 	else()
+		add_library(tools SHARED IMPORTED)
 		set_target_properties(tools PROPERTIES IMPORTED_LOCATION /usr/local/lib/libtools.so)
 	endif()
 
 	if(WIN32)
 	
 	else()
+		add_library(lm SHARED IMPORTED)
 		set_target_properties(lm PROPERTIES IMPORTED_LOCATION /usr/local/lib/liblm.so)
 	endif()
 
