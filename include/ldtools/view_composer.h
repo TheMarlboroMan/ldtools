@@ -109,10 +109,10 @@ class view_composer {
 	void			parse(const rapidjson::Value&);
 	void			draw(ldv::screen&);
 	void			draw(ldv::screen&, const ldv::camera&);
-	void			map_texture(const std::string&, ldv::texture *);
-	void			map_texture(const std::string&, ldv::texture&);
-	void			map_surface(const std::string&, ldv::surface *);
-	void			map_surface(const std::string&, ldv::surface&);
+	void			map_texture(const std::string&, const ldv::texture *);
+	void			map_texture(const std::string&, const ldv::texture&);
+	void			map_surface(const std::string&, const ldv::surface *);
+	void			map_surface(const std::string&, const ldv::surface&);
 	void			map_font(const std::string&, const ldv::ttf_font *);
 	void			map_font(const std::string&, const ldv::ttf_font&);
 	void			clear_view();
@@ -219,8 +219,8 @@ class view_composer {
 	std::vector<item>				data;
 	std::map<std::string, ldv::representation*>	id_map;
 	std::map<std::string, ldv::representation*>	external_map;
-	std::map<std::string, ldv::texture*>		texture_map;
-	std::map<std::string, ldv::surface*>		surface_map;
+	std::map<std::string, const ldv::texture*>		texture_map;
+	std::map<std::string, const ldv::surface*>		surface_map;
 	std::map<std::string, const ldv::ttf_font*>	font_map;
 	std::map<std::string, int>			int_definitions;
 	std::map<std::string, float>			float_definitions;

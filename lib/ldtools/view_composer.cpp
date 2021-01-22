@@ -76,7 +76,7 @@ void view_composer::draw(ldv::screen& p, const ldv::camera& cam) {
 //!are not copied, so it is required that they exist as long as the layout
 //!needs to be drawn. Will throw if the key is used more than once.
 
-void view_composer::map_texture(const std::string& clave, ldv::texture * tex) {
+void view_composer::map_texture(const std::string& clave, const ldv::texture * tex) {
 	if(texture_map.count(clave)) {
 		throw std::runtime_error("Repeated key for texture map "+clave);
 	}
@@ -86,13 +86,13 @@ void view_composer::map_texture(const std::string& clave, ldv::texture * tex) {
 
 //!Maps the texture.
 
-void view_composer::map_texture(const std::string& clave, ldv::texture& tex) {
+void view_composer::map_texture(const std::string& clave, const ldv::texture& tex) {
 	map_texture(clave, &tex);
 }
 
 //!Same as map textures, but with surfaces.
 
-void view_composer::map_surface(const std::string& clave, ldv::surface * sup) {
+void view_composer::map_surface(const std::string& clave, const ldv::surface * sup) {
 	if(surface_map.count(clave)) {
 		throw std::runtime_error("Repeated key for surface map "+clave);
 	}
@@ -102,7 +102,7 @@ void view_composer::map_surface(const std::string& clave, ldv::surface * sup) {
 
 //!Same as map textures, but with surfaces.
 
-void view_composer::map_surface(const std::string& clave, ldv::surface& sup) {
+void view_composer::map_surface(const std::string& clave, const ldv::surface& sup) {
 	map_surface(clave, &sup);
 }
 
