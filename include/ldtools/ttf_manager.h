@@ -34,14 +34,16 @@ class ttf_manager {
 	bool						insert(const std::string&, int, const std::string&);
 	//!Returns true if the font with the given alias and size exists.
 	bool						exists(const std::string&, int) const;
-	//!Erases the fond with the given alias and size. Will throw if the font is not registered.
+	//!Erases the font with the given alias and size. Will throw if the font is not registered.
 	void						erase(const std::string&, int);
+	//!Clears all memory
+	void                        clear();
 
 	private:
 
 	//!This structure is used as the key to retrieve the font from the internal storage.
 	struct font_info {
-		std::string name;				//!< Font alias 
+		std::string name;				//!< Font alias
 		int size;					//!< Font size in px.
 		//!Comparison operator.... TODO: I honestly don't remember what this does.
 		bool operator<(const font_info& o) const

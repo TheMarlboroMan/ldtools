@@ -16,7 +16,12 @@ const ldv::ttf_font& ttf_manager::get(const std::string& f, int t) const {
 bool ttf_manager::insert(const std::string& f, int t, const std::string& r)
 {
 	if(!exists(f, t)) {
-		data.insert( std::pair<font_info, ldv::ttf_font>({f, t}, ldv::ttf_font(r, t) ) );
+
+		data.emplace(
+			std::piecewise_construct,
+			std::forward_as_tuple(font_info{f, t}),
+			std::forward_as_tuple(ldv::ttf_font(r, t))
+		);
 		return true;
 	}
 
@@ -35,4 +40,9 @@ void ttf_manager::erase(const std::string& _fontname, int _fontsize) {
 	}
 
 	data.erase({_fontname, _fontsize});
+}
+
+void ttf_manager::clear() {
+
+	data.clear();
 }
