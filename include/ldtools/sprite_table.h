@@ -18,9 +18,9 @@ namespace ldtools {
 struct sprite_frame {
 	public:
 
+	ldv::rect       box;
 	int             disp_x, //!< Horizontal displacement.
                     disp_y;	//!< Vertical displacement.
-	ldv::rect       box;
 
 	//!Can be used to check that the sprite has been loaded. Will discard
 	//!unitialized sprites.
@@ -46,7 +46,7 @@ class sprite_table_exception:
 //!# X	Y	W	H	DESPX	DESPY
 //!# Standing.
 //!0	0	22	32	0	0
-//!There's a reason it does not provide write capabilities: this class must 
+//!There's a reason it does not provide write capabilities: this class must
 //!only interpret a format and provide read-only access to it. Whatever is used
 //!to write the format is something else's responsibility, so no insert, update
 //!or delete.
@@ -89,7 +89,7 @@ class sprite_table {
 	private:
 
 	//! Internal data storage.is interpreted in terms of a map to enable skips
-	//! in the indexes content (such as frames 0-60 being scenery, 100-140 
+	//! in the indexes content (such as frames 0-60 being scenery, 100-140
 	//! items...).
 
 	container  data;
