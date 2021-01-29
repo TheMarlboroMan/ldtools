@@ -58,7 +58,7 @@ sprite_table& sprite_table::load(const std::string& _path) {
 
 		sprite_frame f{};
 		size_t index;
-		ss>>index>>f.x>>f.y>>f.w>>f.h>>f.disp_x>>f.disp_y;
+		ss>>index>>f.box.origin.x>>f.box.origin.y>>f.box.w>>f.box.h>>f.disp_x>>f.disp_y;
 
 		if(ss.fail()) {
 

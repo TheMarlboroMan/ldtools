@@ -18,19 +18,13 @@ namespace ldtools {
 struct sprite_frame {
 	public:
 
-	int             x,	//!< X position in the sheet.
-                    y;	//!< Y position in the sheet.
-	unsigned int    w, 	//!< Width.
-                    h;	//!< Height.
 	int             disp_x, //!< Horizontal displacement.
                     disp_y;	//!< Vertical displacement.
-
-	//!Returns a libdansdl2 rect from the sprite.
-	ldv::rect       get_rect() const {return ldv::rect{x, y, w, h};}
+	ldv::rect       box;
 
 	//!Can be used to check that the sprite has been loaded. Will discard
 	//!unitialized sprites.
-	explicit operator bool() const {return x || y || w || h || disp_x || disp_y;}
+	explicit operator bool() const {return box.origin.x || box.origin.y || box.w || box.h || disp_x || disp_y;}
 };
 
 //!Exception thrown by the sprite_table.

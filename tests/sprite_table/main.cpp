@@ -29,7 +29,7 @@ int main(int, char **) {
 		//Assert that reference get will throw.
 		try {
 			const auto& ref_sprite=table.get(1);
-			std::cout<<ref_sprite.x<<std::endl; //Silence the compiler warning....
+			std::cout<<ref_sprite.box.origin.x<<std::endl; //Silence the compiler warning....
 			throw std::runtime_error(errsentry);
 		}
 		catch(std::exception& e) {
@@ -106,13 +106,13 @@ int main(int, char **) {
 		//Finally test the iterator change the values...
 		for(auto& pair : table) {
 
-		pair.second.x=pair.first+100;
+		pair.second.box.origin.x=pair.first+100;
 		}
 
 		//And test the const iterator with the changed values.
 		for(const auto& pair : table) {
 	
-			if(pair.second.x!=100+(int)pair.first) {
+			if(pair.second.box.origin.x!=100+(int)pair.first) {
 				throw std::runtime_error("failed to assert that the iterator worked");
 			}
 		}
@@ -137,11 +137,6 @@ bool check_frame(
 	int _dx, 
 	int _dy
 ) {
-	
-	return _f.x==_x
-		&& _f.y==_y
-		&& _f.w==_w
-		&& _f.h==_h
-		&& _f.disp_x==_dx
-		&& _f.disp_y==_dy;
+	ldv::rect box{{_x, _y}, _w, _h};
+	return _f.box==box && _f.disp_x==_dx && _f.disp_y==_dy;
 }
