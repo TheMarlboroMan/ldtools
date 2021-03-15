@@ -27,17 +27,45 @@ const animation_line& animation::get_for_time(float t) const {
 
 
 const animation_line& animation::get_for_time(float t, float total) const {
+
 	if(data.size()==1) return data.at(0);
-	else {
-		float mult=total / duration;
-		float transformado=fmod(t, total);
-		for(const animation_line& fr : data) {
-			if(transformado <= fr.begin_time * mult) {
-				return fr;
-			}
+
+	float mult=total / duration;
+	float transformado=fmod(t, total);
+	for(const animation_line& fr : data) {
+		if(transformado <= fr.begin_time * mult) {
+			return fr;
 		}
-		return data.at(0);
 	}
+
+	return data.at(0);
+}
+
+std::size_t animation::index_for_time(
+	float _t
+) const {
+
+	return index_for_time(_t, duration);
+}
+
+std::size_t animation::index_for_time(
+	float _t, 
+	float _duration
+) const {
+
+	if(data.size()==1) return 0;
+
+	std::size_t res{0};
+	float mult=_duration / duration;
+	float transformado=fmod(_t, _duration);
+	for(const animation_line& fr : data) {
+		if(transformado <= fr.begin_time * mult) {
+			return res;
+		}
+		++res;
+	}
+
+	return 0;
 }
 
 animation_table::animation_table(const sprite_table& t)

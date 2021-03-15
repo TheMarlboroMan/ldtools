@@ -5,5 +5,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/sprite_table.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ttf_manager.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/view_composer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/animation_event_handler.cpp
 	PARENT_SCOPE
 )

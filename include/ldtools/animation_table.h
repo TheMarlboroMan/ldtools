@@ -51,6 +51,10 @@ class animation {
 	//!animation would have a duration defined by the second parameter.
 	const animation_line&		get_for_time(float, float) const;
 
+
+	std::size_t                 index_for_time(float) const;
+	std::size_t                 index_for_time(float, float) const;
+
 	//!Returns the number of frames in the animation.
 	size_t				size() const {return data.size();}
 
