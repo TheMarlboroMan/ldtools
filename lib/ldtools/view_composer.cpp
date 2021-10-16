@@ -70,6 +70,48 @@ void view_composer::draw(ldv::screen& p, const ldv::camera& cam) {
 	}
 }
 
+void view_composer::draw(
+	ldv::screen& p,
+	ldv::point _origin
+) {
+
+	if(with_screen)	{
+
+		p.clear(screen_color);
+	}
+
+
+	for(auto& r : data) {
+
+		auto old_pos=r.ptr->get_position();
+		r.ptr->go_to(old_pos+_origin);
+
+		r.draw(p);
+
+		r.ptr->go_to(old_pos);
+	}
+}
+
+void view_composer::draw(
+	ldv::screen& p, 
+	const ldv::camera& cam,
+	ldv::point _origin
+) {
+	if(with_screen)	{
+		p.clear(screen_color);
+	}
+
+	for(auto& r : data) {
+
+		auto old_pos=r.ptr->get_position();
+		r.ptr->go_to(old_pos+_origin);
+
+		r.draw(p, cam);
+
+		r.ptr->go_to(old_pos);
+	}
+}
+
 //!Maps the texture to the given handle.
 
 //!Mapped textures can be referenced in the layout file by their handle. Textures
@@ -86,7 +128,10 @@ void view_composer::map_texture(const std::string& clave, const ldv::texture * t
 
 //!Maps the texture.
 
-void view_composer::map_texture(const std::string& clave, const ldv::texture& tex) {
+void view_composer::map_texture(
+	const std::string& clave, 
+const ldv::texture& tex
+) {
 	map_texture(clave, &tex);
 }
 

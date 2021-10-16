@@ -107,8 +107,26 @@ class view_composer {
 
 					view_composer();
 	void			parse(const rapidjson::Value&);
+/**
+*draws the layout upon the screen at its coordinates.
+*/
 	void			draw(ldv::screen&);
+/**
+*draws the layout upon the screen at its coordinates taking the camera into 
+*account
+*/
 	void			draw(ldv::screen&, const ldv::camera&);
+/**
+*draws the layout upon the screen at its coordinates using the given point as
+*the origin.
+*/
+	void			draw(ldv::screen&, ldv::point);
+/**
+*draws the layout upon the screen at its coordinates taking the camera into 
+*account and using the given point as the origin.
+*/
+	void			draw(ldv::screen&, const ldv::camera&, ldv::point);
+
 	void			map_texture(const std::string&, const ldv::texture *);
 	void			map_texture(const std::string&, const ldv::texture&);
 	void			map_surface(const std::string&, const ldv::surface *);
