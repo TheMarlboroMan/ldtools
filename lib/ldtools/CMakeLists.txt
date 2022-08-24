@@ -1,6 +1,7 @@
 set(SOURCE
 	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/animation_table.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/lib.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/fps_counter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/sprite_table.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ttf_manager.cpp
