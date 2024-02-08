@@ -11,6 +11,9 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 ## Unreleased:
 
 ### Pending:
+## [1.0.2] - 2024-02-08
+### changed
+- changes build mode
 
 ## [1.0.1] - 2020-09-24
 ### added

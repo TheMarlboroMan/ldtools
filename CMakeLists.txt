@@ -2,33 +2,41 @@ cmake_minimum_required(VERSION 3.5.1)
 project(libldtools)
 
 option(BUILD_DEBUG "Build a debug library" OFF)
-option(BUILD_SHARED "Build a shared library" OFF)
+option(BUILD_SHARED "Build a shared library" ON)
 option(BUILD_STATIC "Build a static library" OFF)
 option(BUILD_TESTS "Build test code" OFF)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
 #library version
 set(MAJOR_VERSION 1)
 set(MINOR_VERSION 0)
-set(PATCH_VERSION 1)
+set(PATCH_VERSION 2)
 
-message("will build ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}")
+if(${BUILD_DEBUG})
+
+	set(RELEASE_VERSION "debug")
+
+else()
+
+	set(RELEASE_VERSION "prod")
+endif()
 
 if(${CMAKE_VERSION} VERSION_LESS "3.22.0")
 
 	add_definitions(-DMAJOR_VERSION=${MAJOR_VERSION})
 	add_definitions(-DMINOR_VERSION=${MINOR_VERSION})
 	add_definitions(-DPATCH_VERSION=${PATCH_VERSION})
+	add_definitions(-DRELEASE_VERSION=\"${RELEASE_VERSION}\")
 else()
 
 	add_compile_definitions(MAJOR_VERSION=${MAJOR_VERSION})
 	add_compile_definitions(MINOR_VERSION=${MINOR_VERSION})
 	add_compile_definitions(PATCH_VERSION=${PATCH_VERSION})
+	add_compile_definitions(RELEASE_VERSION=\"${RELEASE_VERSION}\")
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-Wall -Wextra -Wundef -Wcast-align -Wwrite-strings -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -Woverloaded-virtual -Wno-deprecated -ansi -pedantic -fno-rtti)
 
 #Add the include directories
@@ -37,35 +45,45 @@ include_directories("include")
 set(SOURCE "")
 add_subdirectory("${PROJECT_SOURCE_DIR}/lib")
 
+#library type and filenames.
+if(${BUILD_DEBUG})
+
+	set(CMAKE_BUILD_TYPE Debug)
+	set(LIB_FILENAME "ldtools_debug")
+else()
+
+	set(CMAKE_BUILD_TYPE Release)
+	set(LIB_FILENAME "ldtools")
+endif()
+
 if(${BUILD_STATIC})
 
 	add_library(ldtools_static STATIC ${SOURCE})
-	target_compile_definitions(ldtools_static PUBLIC "-DBUILD_VERSION=\"archive\"")
-	set_target_properties(ldtools_static PROPERTIES OUTPUT_NAME ldtools)
-	set_target_properties(ldtools_static PROPERTIES COMPILE_FLAGS "-O3 -DNDEBUG")
+	set_target_properties(ldtools_static PROPERTIES OUTPUT_NAME ${LIB_FILENAME})
+	target_compile_definitions(ldtools_static PUBLIC "-DLIB_VERSION=\"static\"")
 	install(TARGETS ldtools_static DESTINATION lib)
+
+	if(${BUILD_DEBUG})
+
+		target_compile_definitions(ldtools_static PUBLIC "-DLIBDANSDL2_DEBUG")
+	endif()
+
+	message("will build ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${RELEASE_VERSION}-static")
 endif()
 
 if(${BUILD_SHARED})
 
 	add_library(ldtools_shared SHARED ${SOURCE})
-	target_compile_definitions(ldtools_shared PUBLIC "-DBUILD_VERSION=\"lib\"")
-	set_target_properties(ldtools_shared PROPERTIES OUTPUT_NAME ldtools)
-	set_target_properties(ldtools_shared PROPERTIES COMPILE_FLAGS "-O3 -DNDEBUG")
+	target_compile_definitions(ldtools_shared PUBLIC "-DLIB_VERSION=\"shared\"")
+	set_target_properties(ldtools_shared PROPERTIES OUTPUT_NAME ${LIB_FILENAME})
 	install(TARGETS ldtools_shared DESTINATION lib)
-endif()
 
+	if(${BUILD_DEBUG})
 
-if(${BUILD_DEBUG})
+		target_compile_definitions(ldtools_shared PUBLIC "-DLIBDANSDL2_DEBUG")
+	endif()
 
-	add_library(ldtools_debug SHARED ${SOURCE})
-	target_compile_definitions(ldtools_debug PUBLIC "-DBUILD_VERSION=\"debug\"")
-	#add the libdandsl2 debug part. Should not be needed, but I don't know
-	#if this library may use debug pieces some day.
-	target_compile_definitions(ldtools_debug PUBLIC "-DLIBDANSDL2_DEBUG")
-	set_target_properties(ldtools_debug PROPERTIES OUTPUT_NAME ldtools_debug)
-	set_target_properties(ldtools_debug PROPERTIES COMPILE_FLAGS "-O0 -g")
-	install(TARGETS ldtools_debug DESTINATION lib)
+	message("will build ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${RELEASE_VERSION}-shared")
 endif()
 
 install(DIRECTORY include/ DESTINATION include)
