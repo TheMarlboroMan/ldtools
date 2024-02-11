@@ -63,11 +63,6 @@ if(${BUILD_STATIC})
 	target_compile_definitions(ldtools_static PUBLIC "-DLIB_VERSION=\"static\"")
 	install(TARGETS ldtools_static DESTINATION lib)
 
-	if(${BUILD_DEBUG})
-
-		target_compile_definitions(ldtools_static PUBLIC "-DLIBDANSDL2_DEBUG")
-	endif()
-
 	message("will build ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${RELEASE_VERSION}-static")
 endif()
 
@@ -77,11 +72,6 @@ if(${BUILD_SHARED})
 	target_compile_definitions(ldtools_shared PUBLIC "-DLIB_VERSION=\"shared\"")
 	set_target_properties(ldtools_shared PROPERTIES OUTPUT_NAME ${LIB_FILENAME})
 	install(TARGETS ldtools_shared DESTINATION lib)
-
-	if(${BUILD_DEBUG})
-
-		target_compile_definitions(ldtools_shared PUBLIC "-DLIBDANSDL2_DEBUG")
-	endif()
 
 	message("will build ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}-${RELEASE_VERSION}-shared")
 endif()
