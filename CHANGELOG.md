@@ -11,6 +11,12 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 ## Unreleased:
 
 ### Pending:
+
+## [1.0.3] - 2024-02-27
+### added
+- Added flipped flags to animation frames.
+- Added flipped flags to regular sprite sheets.
+
 ## [1.0.2] - 2024-02-08
 ### changed
 - changes build mode

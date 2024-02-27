@@ -66,6 +66,12 @@ sprite_table& sprite_table::load(const std::string& _path) {
 			throw sprite_table_exception(std::string{"Malformed sprite line in "}+_path+" : "+line);
 		}
 
+		ss>>f.flags;
+		if(ss.fail()) {
+
+			//no sweat, older file format.
+		}
+
 		data.insert(std::make_pair(index, f));
 	}
 

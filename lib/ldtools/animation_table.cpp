@@ -148,16 +148,23 @@ void animation_table::read_line(const std::string& linea, animation& animacion) 
 
 	const char separador='\t';
 	std::vector<std::string> valores=tools::explode(linea, separador);
-	if(valores.size()==2) {
+	if(valores.size()==2 || valores.size()==3) {
+
 		int duration=std::atoi(valores[0].c_str());
 		int indice_frame=std::atoi(valores[1].c_str());
+		int flipped=0;
+
+		if(3 == valores.size()) {
+
+			flipped=std::stoi(valores[2]);
+		}
 
 		try {
 			const auto& frame=table.get(indice_frame);
 
 			float dur=(float)duration / 1000.f;
 			animacion.duration+=dur;
-			animacion.data.push_back(animation_line(dur, 0.0f, frame));
+			animacion.data.push_back(animation_line(dur, 0.0f, frame, flipped));
 			animacion.adjust_frame_time();
 		}
 		catch(std::out_of_range& e) {

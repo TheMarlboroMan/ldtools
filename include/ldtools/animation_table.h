@@ -12,16 +12,31 @@ namespace ldtools {
 
 //!Defines a sprite animation frame.
 struct animation_line {
+
 	public:
+
+	//Frames are flipped through flags.
+	enum flip {
+		none=0,
+		horizontal=1,
+		vertical=2
+	};
+
 	//!Class constructor.
-					animation_line(float d, float m, const sprite_frame& f)
-						:duration(d), begin_time(m), frame(f) {}
+					animation_line(float d, float m, const sprite_frame& f, int _flipped)
+						:duration(d), begin_time(m), frame(f), flipped(_flipped) {}
+
 	//!Checks the line has data.
 					explicit operator bool() const {return duration && frame;}
 
-	float 				duration=0.0f;		//!< Frame duration in ms.
-	float				begin_time=0.0f;	//!< Starting ms of the frame... or maybe ending. Who knows.
-	sprite_frame 			frame;			//!< Frame data.
+	bool                is_flipped_horizontally() const {return flipped & horizontal;}
+	bool                is_flipped_vertically() const {return flipped & vertical;}
+	bool                is_flipped_both() const {return flipped & (vertical + horizontal);}
+
+	float               duration=0.0f;		//!< Frame duration in ms.
+	float               begin_time=0.0f;	//!< Starting ms of the frame... or maybe ending. Who knows.
+	sprite_frame        frame;			//!< Frame data.
+	int                 flipped;        //!< Flip flags.
 };
 
 class animation_table;

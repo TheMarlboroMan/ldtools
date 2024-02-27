@@ -18,9 +18,16 @@ namespace ldtools {
 struct sprite_frame {
 	public:
 
+	enum flags {
+		none=0,
+		horizontal_flip=1,
+		vertical_flip=2
+	};
+
 	ldv::rect       box;
 	int             disp_x, //!< Horizontal displacement.
                     disp_y;	//!< Vertical displacement.
+	int             flags; //!< Vertical and horizontal flipping flags.
 
 	//!Can be used to check that the sprite has been loaded. Will discard
 	//!unitialized sprites.
@@ -43,13 +50,14 @@ class sprite_table_exception:
 //!frames loaded from a file with a specific format.
 
 //!The format used uses # to comment lines and whitespace to separate values.
-//!# X	Y	W	H	DESPX	DESPY
+//!# X	Y	W	H	DESPX	DESPY FLAGS
 //!# Standing.
-//!0	0	22	32	0	0
+//!0	0	22	32	0	0   0
 //!There's a reason it does not provide write capabilities: this class must
 //!only interpret a format and provide read-only access to it. Whatever is used
 //!to write the format is something else's responsibility, so no insert, update
 //!or delete.
+//!Flags are optional in the file, as they were added later.
 
 class sprite_table {
 	public:
