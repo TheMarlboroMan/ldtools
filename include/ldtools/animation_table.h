@@ -16,27 +16,34 @@ struct animation_line {
 	public:
 
 	//Frames are flipped through flags.
-	enum flip {
+	enum flags {
 		none=0,
-		horizontal=1,
-		vertical=2
+		horizontal_flip=1,
+		vertical_flip=2,
+		degree_rotation_add_90=4,
+		degree_rotation_add_180=8
 	};
 
 	//!Class constructor.
-					animation_line(float d, float m, const sprite_frame& f, int _flipped)
-						:duration(d), begin_time(m), frame(f), flipped(_flipped) {}
+					animation_line(float d, float m, const sprite_frame& f, int _flags)
+						:duration(d), begin_time(m), frame(f), flags(_flags) {}
 
 	//!Checks the line has data.
 					explicit operator bool() const {return duration && frame;}
 
-	bool                is_flipped_horizontally() const {return flipped & horizontal;}
-	bool                is_flipped_vertically() const {return flipped & vertical;}
-	bool                is_flipped_both() const {return flipped & (vertical + horizontal);}
+	bool                is_flipped_horizontally() const {return flags & horizontal_flip;}
+	bool                is_flipped_vertically() const {return flags & vertical_flip;}
+	bool                is_flipped_both() const {return flags & (vertical_flip + horizontal_flip);}
+
+	/**
+    *returns either 0, 90, 180 or 270 degrees.
+	*/
+	int                 get_rotation() const;
 
 	float               duration=0.0f;		//!< Frame duration in ms.
 	float               begin_time=0.0f;	//!< Starting ms of the frame... or maybe ending. Who knows.
 	sprite_frame        frame;			//!< Frame data.
-	int                 flipped;        //!< Flip flags.
+	int                 flags;        //!< Transformation flags flags.
 };
 
 class animation_table;

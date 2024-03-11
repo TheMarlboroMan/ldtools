@@ -21,13 +21,17 @@ struct sprite_frame {
 	enum flags {
 		none=0,
 		horizontal_flip=1,
-		vertical_flip=2
+		vertical_flip=2,
+		degree_rotation_add_90=4,
+		degree_rotation_add_180=8
 	};
+
+	int             get_rotation() const;
 
 	ldv::rect       box;
 	int             disp_x, //!< Horizontal displacement.
                     disp_y;	//!< Vertical displacement.
-	int             flags; //!< Vertical and horizontal flipping flags.
+	int             flags; //!< Vertical and horizontal flipping flags, rotation flags.
 
 	//!Can be used to check that the sprite has been loaded. Will discard
 	//!unitialized sprites.

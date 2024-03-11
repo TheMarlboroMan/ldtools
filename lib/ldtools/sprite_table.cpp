@@ -4,6 +4,23 @@
 #include<sstream>
 
 using namespace ldtools;
+   
+int sprite_frame::get_rotation() const {
+
+	int result=0;
+
+	if(flags & degree_rotation_add_90) {
+
+		result+=90;
+	}
+
+	if(flags & degree_rotation_add_180) {
+
+		result+=180;
+	}
+
+	return result;
+}
 
 sprite_table::sprite_table() {
 

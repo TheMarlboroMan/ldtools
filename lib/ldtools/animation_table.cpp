@@ -11,6 +11,23 @@ animation::animation()
 
 }
 
+int animation_line::get_rotation() const {
+
+	int result=0;
+
+	if(flags & degree_rotation_add_90) {
+
+		result+=90;
+	}
+
+	if(flags & degree_rotation_add_180) {
+
+		result+=180;
+	}
+
+	return result;
+}
+
 void animation::adjust_frame_time() {
 
 	duration=0;
@@ -152,11 +169,11 @@ void animation_table::read_line(const std::string& linea, animation& animacion) 
 
 		int duration=std::atoi(valores[0].c_str());
 		int indice_frame=std::atoi(valores[1].c_str());
-		int flipped=0;
+		int flags=0;
 
 		if(3 == valores.size()) {
 
-			flipped=std::stoi(valores[2]);
+			flags=std::stoi(valores[2]);
 		}
 
 		try {
@@ -164,7 +181,7 @@ void animation_table::read_line(const std::string& linea, animation& animacion) 
 
 			float dur=(float)duration / 1000.f;
 			animacion.duration+=dur;
-			animacion.data.push_back(animation_line(dur, 0.0f, frame, flipped));
+			animacion.data.push_back(animation_line(dur, 0.0f, frame, flags));
 			animacion.adjust_frame_time();
 		}
 		catch(std::out_of_range& e) {

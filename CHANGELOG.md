@@ -12,6 +12,11 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 
 ### Pending:
 
+## [1.0.4] - 2024-03-11
+### added
+- Added rotation flags to animation frames.
+- Added rotation flags to regular sprite sheets.
+
 ## [1.0.3] - 2024-02-27
 ### added
 - Added flipped flags to animation frames.
