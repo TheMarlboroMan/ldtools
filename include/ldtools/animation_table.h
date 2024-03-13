@@ -36,7 +36,7 @@ struct animation_line {
 	bool                is_flipped_both() const {return flags & (vertical_flip + horizontal_flip);}
 
 	/**
-    *returns either 0, 90, 180 or 270 degrees.
+    * returns the sprite rotation clamped to 0-359. Currently in 90 degree steps.
 	*/
 	int                 get_rotation() const;
 

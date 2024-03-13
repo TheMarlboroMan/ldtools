@@ -26,6 +26,9 @@ struct sprite_frame {
 		degree_rotation_add_180=8
 	};
 
+	/**
+    * returns the sprite rotation clamped to 0-359. Currently in 90 degree steps.
+    */
 	int             get_rotation() const;
 
 	ldv::rect       box;
