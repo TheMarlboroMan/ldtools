@@ -26,6 +26,10 @@ struct sprite_frame {
 		degree_rotation_add_180=8
 	};
 
+	bool                is_flipped_horizontally() const {return flags & horizontal_flip;}
+	bool                is_flipped_vertically() const {return flags & vertical_flip;}
+	bool                is_flipped_both() const {return flags & (vertical_flip + horizontal_flip);}
+
 	/**
     * returns the sprite rotation clamped to 0-359. Currently in 90 degree steps.
     */
