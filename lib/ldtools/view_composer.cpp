@@ -351,6 +351,8 @@ view_composer::uptr_rep view_composer::create_bitmap(const rapidjson::Value& tok
 		)
 	);
 
+	res->set_blend(ldv::representation::blends::alpha);
+
 	if(token.HasMember(brush_key)) {
 
 		const auto& entries=token[brush_key].GetArray();
@@ -377,6 +379,7 @@ view_composer::uptr_rep view_composer::create_ttf(const rapidjson::Value& token)
 			token[text_key].GetString()
 		)
 	);
+
 	res->set_blend(ldv::representation::blends::alpha);
 
 	if(token.HasMember(text_line_height_ratio_key)) {
@@ -477,4 +480,28 @@ int view_composer::get_int(const std::string& k) const {
 //!Will throw if the definition does not exist.
 float view_composer::get_float(const std::string& k) const {
 	return get_definition(k, float_definitions);
+}
+
+void view_composer::set_text(
+	const std::string& _id,
+	const std::string& _value
+) {
+
+	static_cast<ldv::ttf_representation*>(get_by_id(_id))->set_text(_value);
+}
+
+void view_composer::set_visible(
+	const std::string& _id,
+	bool _value
+) {
+
+	static_cast<ldv::representation*>(get_by_id(_id))->set_visible(_value);
+}
+
+void view_composer::set_alpha(
+	const std::string& _id,
+	int _value
+) {
+
+	static_cast<ldv::representation*>(get_by_id(_id))->set_alpha(_value);
 }

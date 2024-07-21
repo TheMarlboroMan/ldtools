@@ -135,6 +135,21 @@ class view_composer {
 	void			map_font(const std::string&, const ldv::ttf_font&);
 	void			clear_view();
 	void			clear_definitions();
+/**
+ * sets the text for the ttf representation identified by the first parameter.
+ * If no representation is found we will just throw.
+ */
+	void            set_text(const std::string&, const std::string&);
+/**
+ * changes the visibility of the representation identified by the first
+ * parameter. Will throw if no representation is found.
+ */
+	void            set_visible(const std::string&, bool);
+/**
+ * changes the alpha value of the representation identified by the first
+ * parameter. Will throw if no representation is found.
+ */
+	void            set_alpha(const std::string&, int);
 
 	//!Empties the representation, allowing for a new call to "parse".
 	void			clear()

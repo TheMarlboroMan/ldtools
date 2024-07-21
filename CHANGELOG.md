@@ -12,6 +12,11 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 
 ### Pending:
 
+## [1.0.5] - 2024-07-21
+### added
+- Added alpha blend to bmp representations in view composer.
+- Added set text/alpha/visible to view composer.
+
 ## [1.0.4] - 2024-03-11
 ### added
 - Added rotation flags to animation frames.
