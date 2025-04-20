@@ -1,8 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <vector>
-#include <algorithm>
+#include "time_definitions.h"
 #include <chrono>
 
 namespace ldtools {
@@ -11,8 +9,6 @@ namespace ldtools {
 //!involved.
 class fps_counter {
 	public:
-
-	typedef		double tdelta;		//!< Defines the elapsed time type (1.0 is a second).
 
 	//!Class constructor.
 			fps_counter();

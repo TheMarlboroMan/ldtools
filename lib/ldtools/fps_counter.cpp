@@ -1,5 +1,4 @@
 #include <ldtools/fps_counter.h>
-#include <iostream>
 
 using namespace ldtools;
 
@@ -42,7 +41,7 @@ void fps_counter::begin_time_produce() {
 	ticks_produce=t_clock::now();
 }
 
-fps_counter::tdelta fps_counter::end_time_produce() {
+tdelta fps_counter::end_time_produce() {
 
 	auto int_ms=std::chrono::duration_cast<std::chrono::milliseconds>(t_clock::now() - ticks_produce);
 	return int_ms.count() / 1000.0;
