@@ -28,10 +28,12 @@ void fps_counter::loop_step() {
 void fps_counter::fill_until(tdelta& produced, tdelta pdelta) {
 
 	auto start=t_clock::now();
-	float diff=pdelta-produced, curr=0.f;
+	tdelta diff=pdelta-produced, curr=0.;
 	while(curr < diff) {
+
 		curr=std::chrono::duration_cast<std::chrono::milliseconds>(t_clock::now() - start).count() / 1000.f;
 	}
+
 	produced+=curr;
 }
 

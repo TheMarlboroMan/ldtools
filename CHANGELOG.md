@@ -12,6 +12,10 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 
 ### Pending:
 
+## [1.0.6] - 2025-04-20
+### changed
+- Changes delta time type to double.
+
 ## [1.0.5] - 2024-07-21
 ### added
 - Added alpha blend to bmp representations in view composer.

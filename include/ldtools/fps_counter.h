@@ -12,7 +12,7 @@ namespace ldtools {
 class fps_counter {
 	public:
 
-	typedef		float	tdelta;		//!< Defines the elapsed time type (1.0 is a second).
+	typedef		double tdelta;		//!< Defines the elapsed time type (1.0 is a second).
 
 	//!Class constructor.
 			fps_counter();
