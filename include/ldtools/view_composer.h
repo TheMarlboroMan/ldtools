@@ -141,6 +141,10 @@ class view_composer {
  */
 	void            set_text(const std::string&, const std::string&);
 /**
+ * sets the color for the text representation. 
+ */
+	void            set_text_color(const std::string&, const ldv::rgba_color&);
+/**
  * changes the visibility of the representation identified by the first
  * parameter. Will throw if no representation is found.
  */

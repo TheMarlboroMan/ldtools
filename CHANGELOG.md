@@ -9,8 +9,14 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 ## Known bugs:
 
 ## Unreleased:
+- Should think about adding set_color for all stuff that supports color.
+- For that we would need a map of id to type.
 
 ### Pending:
+
+## [1.0.7] - 2025-04-20
+### added
+- Adds set_text_color for ttf stuff.
 
 ## [1.0.6] - 2025-04-20
 ### changed

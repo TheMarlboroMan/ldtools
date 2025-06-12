@@ -490,6 +490,14 @@ void view_composer::set_text(
 	static_cast<ldv::ttf_representation*>(get_by_id(_id))->set_text(_value);
 }
 
+void view_composer::set_text_color(
+	const std::string& _id,
+	const ldv::rgba_color& _value
+) {
+
+	static_cast<ldv::ttf_representation*>(get_by_id(_id))->set_color(_value);
+}
+
 void view_composer::set_visible(
 	const std::string& _id,
 	bool _value
