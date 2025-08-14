@@ -39,7 +39,8 @@ bool sprite_table::exists(size_t _index) const {
 const sprite_frame& sprite_table::get(size_t _index) const {
 
 	if(!data.count(_index)) {
-		throw sprite_table_exception(std::string{"cannot get invalid index "}+std::to_string(_index));
+
+		throw sprite_table_exception(std::string{"cannot get invalid sprite index "}+std::to_string(_index));
 	}
 
 	return data.at(_index);
