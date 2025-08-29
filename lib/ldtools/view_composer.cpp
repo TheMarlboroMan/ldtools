@@ -32,6 +32,7 @@ const char * view_composer::text_key="text";
 const char * view_composer::text_line_height_ratio_key="line_height_ratio";
 const char * view_composer::surface_key="surface";
 const char * view_composer::font_key="font";
+const char * view_composer::line_height_ratio_key="line_height_ratio";
 const char * view_composer::texture_key="texture";
 const char * view_composer::brush_key="brush";
 const char * view_composer::visible_key="visible";
@@ -372,11 +373,18 @@ view_composer::uptr_rep view_composer::create_ttf(const rapidjson::Value& token)
 		throw std::runtime_error(std::string{"Unable to locate font "}+fontkey+" for ttf");
 	}
 
+	double ratio=1.;
+	if(token.HasMember(line_height_ratio_key)) {
+
+		ratio=token[line_height_ratio_key].GetDouble();
+	}
+
 	uptr_rep res(
 		new ldv::ttf_representation(
 			*font_map[fontkey],
 			rgba_from_list(token[rgba_key]),
-			token[text_key].GetString()
+			token[text_key].GetString(),
+			ratio
 		)
 	);
 

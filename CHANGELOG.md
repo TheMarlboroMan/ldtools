@@ -14,6 +14,10 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 
 ### Pending:
 
+## [1.0.8] - 2025-08-29
+### added
+- Adds line_height_ratio definition for ttf nodes.
+
 ## [1.0.7] - 2025-04-20
 ### added
 - Adds set_text_color for ttf stuff.

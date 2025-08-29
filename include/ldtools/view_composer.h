@@ -76,6 +76,7 @@ ttf:
 	text:"this is the text",(text)
 	font:"font handle", 	(font handle)
 	rgba:[0, 0, 0, 255],	(font color)
+	line_height_ratio:1.5   (line height as a ratio of the font size)
 
 external:
 	ref:"menu"	(allows a code representation to be included in the view
@@ -205,6 +206,7 @@ class view_composer {
 	static const char *		texture_key;
 	static const char *		surface_key;
 	static const char *		font_key;
+	static const char *		line_height_ratio_key;
 	static const char *		brush_key;
 	static const char *		visible_key;
 	static const char *		external_key;
