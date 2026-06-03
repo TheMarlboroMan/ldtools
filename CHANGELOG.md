@@ -14,6 +14,10 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 
 ### Pending:
 
+## [1.0.9] - 2026-06-03
+### added
+- Adds size method to view composer.
+
 ## [1.0.8] - 2025-08-29
 ### added
 - Adds line_height_ratio definition for ttf nodes.

@@ -50,6 +50,7 @@ view_composer::view_composer()
 //!Draws the composition to the screen.
 
 void view_composer::draw(ldv::screen& p) {
+
 	if(with_screen)	{
 		p.clear(screen_color);
 	}
@@ -80,7 +81,6 @@ void view_composer::draw(
 
 		p.clear(screen_color);
 	}
-
 
 	for(auto& r : data) {
 

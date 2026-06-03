@@ -136,6 +136,7 @@ class view_composer {
 	void			map_font(const std::string&, const ldv::ttf_font&);
 	void			clear_view();
 	void			clear_definitions();
+	std::size_t     size() const {return data.size();}
 /**
  * sets the text for the ttf representation identified by the first parameter.
  * If no representation is found we will just throw.
@@ -164,7 +165,7 @@ class view_composer {
 	}
 	ldv::representation * 	get_by_id(const std::string&);
 	bool			id_exists(const std::string&) const;
-	int			get_int(const std::string&) const;
+	int			    get_int(const std::string&) const;
 	float			get_float(const std::string&) const;
 	void			register_as_external(const std::string&, ldv::representation&);
 
