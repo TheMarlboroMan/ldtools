@@ -112,9 +112,9 @@ IF(WIN32)
 			IMPORTED_LOCATION "../../tools/build/libtools${IMPORTED_LIB_POSTFIX}.dll"
 		)
 
-		target_link_libraries(appconsole_shared PRIVATE lm)
-		target_link_libraries(appconsole_shared PRIVATE dansdl2)
-		target_link_libraries(appconsole_shared PRIVATE tools)
+		target_link_libraries(ldtools_shared PRIVATE lm)
+		target_link_libraries(ldtools_shared PRIVATE dansdl2)
+		target_link_libraries(ldtools_shared PRIVATE tools)
 
 	endif()
 
