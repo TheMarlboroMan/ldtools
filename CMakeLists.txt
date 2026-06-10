@@ -82,11 +82,40 @@ IF(WIN32)
 
 	include_directories("${CMAKE_CURRENT_LIST_DIR}/../log/include/")
 	include_directories("${CMAKE_CURRENT_LIST_DIR}/../libdansdl2/include/")
-	include_directories("${CMAKE_CURRENT_LIST_DIR}/../rapidjson/include/")
 	include_directories("${CMAKE_CURRENT_LIST_DIR}/../tools/include/")
 
 	if(${BUILD_SHARED}) 
 		target_compile_definitions(ldtools_shared PUBLIC -DWINBUILD)
+
+		set(IMPORTED_LIB_POSTFIX "")
+		if(${BUILD_DEBUG})
+
+			set(IMPORTED_LIB_POSTFIX "_debug")
+		endif()
+
+		#in windows we cannot allow unresolved symbols...
+		add_library(lm SHARED IMPORTED)
+		set_target_properties(lm PROPERTIES 
+			IMPORTED_IMPLIB "../../log/build/liblm${IMPORTED_LIB_POSTFIX}.dll.a"
+			IMPORTED_LOCATION "../../log/build/liblm${IMPORTED_LIB_POSTFIX}.dll"
+		)
+
+		add_library(dansdl2 SHARED IMPORTED)
+		set_target_properties(dansdl2 PROPERTIES 
+			IMPORTED_IMPLIB "../../libdansdl2/build/libdansdl2${IMPORTED_LIB_POSTFIX}.dll.a"
+			IMPORTED_LOCATION "../../libdansdl2/build/libdansdl2${IMPORTED_LIB_POSTFIX}.dll"
+		)
+
+		add_library(tools SHARED IMPORTED)
+		set_target_properties(tools PROPERTIES 
+			IMPORTED_IMPLIB "../../tools/build/libtools${IMPORTED_LIB_POSTFIX}.dll.a"
+			IMPORTED_LOCATION "../../tools/build/libtools${IMPORTED_LIB_POSTFIX}.dll"
+		)
+
+		target_link_libraries(appconsole_shared PRIVATE lm)
+		target_link_libraries(appconsole_shared PRIVATE dansdl2)
+		target_link_libraries(appconsole_shared PRIVATE tools)
+
 	endif()
 
 	if(${BUILD_STATIC})
@@ -98,32 +127,24 @@ if(${BUILD_TESTS})
 
 	if(WIN32)
 
+		message("No tests for windows, sorry")
+		#target_link_libraries(sprite_table ldtools_shared tools dansdl2 lm SDL2 SDL2_ttf SDL2_mixer SDL2_image glu32 opengl32 stdc++fs)
+		#target_link_options(sprite_table PRIVATE -lmingw32 -lSDL2main -lSDL2 -mwindows)
+
 	else()
+
 		add_library(dansdl2 SHARED IMPORTED)
 		set_target_properties(dansdl2 PROPERTIES IMPORTED_LOCATION /usr/local/lib/libdansdl2.so)
-	endif()
 
-
-	if(WIN32)
-
-	else()
 		add_library(tools SHARED IMPORTED)
 		set_target_properties(tools PROPERTIES IMPORTED_LOCATION /usr/local/lib/libtools.so)
-	endif()
 
-	if(WIN32)
-
-	else()
 		add_library(lm SHARED IMPORTED)
 		set_target_properties(lm PROPERTIES IMPORTED_LOCATION /usr/local/lib/liblm.so)
-	endif()
 
-	add_executable(sprite_table tests/sprite_table/main.cpp)
-	if(WIN32)
-		target_link_libraries(sprite_table ldtools_shared tools dansdl2 lm SDL2 SDL2_ttf SDL2_mixer SDL2_image glu32 opengl32 stdc++fs)
-		target_link_options(sprite_table PRIVATE -lmingw32 -lSDL2main -lSDL2 -mwindows)
-	else()
+		add_executable(sprite_table tests/sprite_table/main.cpp)
 		target_link_libraries(sprite_table ldtools_shared tools dansdl2 lm SDL2 SDL2_ttf SDL2_mixer SDL2_image GL)
 		add_custom_command(TARGET sprite_table POST_BUILD COMMAND cp -r ../tests/sprite_table/*.txt ./)
 	endif()
+
 endif()
