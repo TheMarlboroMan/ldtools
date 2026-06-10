@@ -91,7 +91,7 @@ IF(WIN32)
 
 	if(${BUILD_STATIC})
 		target_compile_definitions(ldtools_static PUBLIC -DWINBUILD)
-	endif
+	endif()
 endif()
 
 if(${BUILD_TESTS})
