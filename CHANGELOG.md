@@ -14,6 +14,10 @@ Changes will be documented under Added, Changed, Deprecated, Removed, Fixed or S
 
 ### Pending:
 
+## [1.0.10] - 2026-06-12
+### added
+- Adds size method to ttf manager.
+
 ## [1.0.9] - 2026-06-03
 ### added
 - Adds size method to view composer.

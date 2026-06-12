@@ -38,6 +38,8 @@ class ttf_manager {
 	void						erase(const std::string&, int);
 	//!Clears all memory
 	void                        clear();
+	//!Returns the amount of loaded pairs of font-size
+	std::size_t                 size() const {return data.size();}
 
 	private:
 
